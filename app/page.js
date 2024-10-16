@@ -1,95 +1,36 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import Menu from "./components/Menu/Menu";
+import style from "./page.module.css";
+import HomeSearchBar from "./SpecificComponents/HomeSearchBar/HomeSearchBar";
+import AllTransactionsButton from "./SpecificComponents/AllTransactionsButton/AllTransactionsButton";
 
 export default function Home() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>app/page.js</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <Menu>
+      <div className={style.page}>
+      <div className={style.totalBalance}>
+        <p className={style.balanceTitle}>Total Balance</p>
+        <p className={style.balanceAmount}>3,245.00lv</p>
+      </div>
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
+      <div className={style.seperateAmountContainer}>
+        <div className={style.inBankWrapper}>
+          <p className={style.inBankTitle}>Bank</p>
+          <p className={style.inBankAmount}>3,245.00</p>
         </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+
+        <div className={style.ceshWrapper}>
+          <p className={style.ceshTitle}>Cash</p>
+          <p className={style.ceshAmount}>9,999,999.99</p>
+        </div>
+      </div>
+
+      <div className={style.transactionsTitleAndButtonContainer}>
+        <p className={style.transactionsTitle}>Transactions</p>
+        <AllTransactionsButton />
+      </div>
+        <HomeSearchBar />
+      </div>
+    </Menu>
+    
   );
 }

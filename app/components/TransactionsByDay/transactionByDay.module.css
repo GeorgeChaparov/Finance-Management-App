@@ -1,0 +1,36 @@
+.container{
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+.infoContainer{
+    width: calc(100% - 30px);
+    height: fit-content;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+.dateWrapper{
+    height: 100%;
+}
+
+.date{
+    font-weight: bold;
+    color: white;
+}
+
+.dayOfWeek{
+    font-size: small;
+    color: white;
+}
+
+.amountWrapper{
+    height: 100%;
+}

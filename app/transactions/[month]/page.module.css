@@ -1,0 +1,67 @@
+.page{
+  width: 100%;
+  height: 100%;
+  
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: nowrap;
+  flex-direction: column;
+}
+
+.titleAnaDateWrapper{
+  width: calc(100% - 30px);
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.title{
+  color: white;
+  font-size: x-large;
+}
+
+.chartContainer{
+  width: calc(100% - 30px);
+  height: 200px;
+
+  display: flex;
+
+  background-color: white;
+  border-radius: 25px;
+
+  margin-bottom: 5px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.chartInnerDiv{
+  height: 300px;
+  width: 300px;
+  top: -50px;
+  position: relative;
+}
+
+.netAmountContainer{
+  background-color: white;
+
+  width: calc(100% - 30px);
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+
+  border-radius: 20px;
+}
+
+.netAmountContainer p{
+  line-height: 5px;
+}
+
+.netAmount{
+  font-weight: bold;
+}

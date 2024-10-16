@@ -1,0 +1,6 @@
+.button{
+    z-index: 1;
+    border-radius: 15px;
+    background-color: white;
+    height: 25px;
+}

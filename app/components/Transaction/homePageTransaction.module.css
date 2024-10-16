@@ -1,0 +1,56 @@
+.background{
+    background-color: black;
+    width: calc(100% - 30px); 
+    height: 65px;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: start;
+
+    padding: 0px 15px;
+
+    border-radius: 20px;
+    border-width: 1px;
+    border-color: white;
+    border-style: solid;
+
+    margin-bottom: 10px;
+}
+
+.logo{
+    border-radius: 50px;
+}
+
+.nameAndCategoryWrapper{
+    margin-left: 10px;
+}
+
+.nameAndCategoryWrapper p{
+    text-align: left;
+    line-height: 10px;
+}
+
+.name{
+    font-weight: bold;
+    color: white;
+}
+
+.category{
+    font-size: small;
+    color: white;
+}
+
+.amountAndDateWrapper{
+    margin-left: auto;
+}
+
+.amountAndDateWrapper p{
+    text-align: right;
+    line-height: 10px;
+}
+
+.dateOrTime{
+    color: white;
+}
