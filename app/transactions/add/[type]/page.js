@@ -21,10 +21,15 @@ let time = `${hours}:${minutes} ${period}`;
 export default function AddTransaction({ params }) {
   const datePickerRef = useRef(null);
   const timePickerRef = useRef(null);
-
+  const incomeButtonRef = useRef(null);
+  const expenseButtonRef = useRef(null);
+  const bankButtonRef = useRef(null);
+  const cashButtonRef = useRef(null);
   const [transactionDate, setTransactionDate] = useState(today);
   const [transactionTime, setTransactionTime] = useState(time);
   
+  const typeOfTransactions = params.type;
+
   const openDatePicker = () => {
     datePickerRef.current.showPicker();
   };
@@ -33,11 +38,29 @@ export default function AddTransaction({ params }) {
     timePickerRef.current.showPicker();
   };
 
-  // Effect to add event listener for the date picker change
+  const selectIncomeButton = () => {
+    incomeButtonRef.current.classList.add(style.selectedButton);
+    expenseButtonRef.current.classList.remove(style.selectedButton);   
+  };
+  
+  const selectExpenseButton = () => {
+    expenseButtonRef.current.classList.add(style.selectedButton);
+    incomeButtonRef.current.classList.remove(style.selectedButton);
+  };
+
+  const selectBankButton = () => {
+    bankButtonRef.current.classList.add(style.selectedButton);
+    cashButtonRef.current.classList.remove(style.selectedButton);
+  };
+
+  const selectCashButton = () => {
+    cashButtonRef.current.classList.add(style.selectedButton);
+    bankButtonRef.current.classList.remove(style.selectedButton);
+  };
+
   useEffect(() => {
     const datePicker = datePickerRef.current;
     const timePicker = timePickerRef.current;
-
     const handleDateChange = (event) => {
       const value = datePicker.value;
       const splitedDate = value.split("-");
@@ -86,45 +109,64 @@ export default function AddTransaction({ params }) {
       }
 
     };
-  }, []); // Empty dependency array to run only once on mount
+  }, []);
+
+
+  useEffect(() => {
+    switch (typeOfTransactions) {
+      case "income":
+        selectIncomeButton();
+        break;
+      case "expense":
+        selectExpenseButton();
+        break;
+      default:
+        break;
+    }
+
+    selectBankButton();
+  }, [typeOfTransactions]);
 
   return (
     <div className={style.wrapper}>
-      <input type="text" placeholder="Name" className={style.name}></input>
-      <div className={style.dateTimePicker}>
+      <div className={style.contentWrapperOne}>
+        <input type="text" placeholder="Name" className={style.name}></input>
+        <div className={style.dateTimePicker}>
+          <div>
+            <p className={style.datePicker}>
+              {transactionDate}
+            </p>
+            <input onFocus={openDatePicker} ref={datePickerRef} id="datePicker" type="date" className={style.picker} />
+          </div>
+
+          <div className={style.timePickerContainer}>
+            <p className={style.timePicker}>
+              {transactionTime}
+            </p>
+            <input onFocus={openTimePicker} ref={timePickerRef} id="timePicker" type="time" className={style.picker} />
+          </div>
+        </div>
+
         <div>
-          <p className={style.datePicker}>
-            {transactionDate}
-          </p>
-          <input onFocus={openDatePicker} ref={datePickerRef} id="datePicker" type="date" className={style.picker} />
+          <button onClick={selectExpenseButton} ref={expenseButtonRef} className={style.radioButton}>Expense</button>
+          <button onClick={selectIncomeButton} ref={incomeButtonRef} className={style.radioButton}>Income</button>
         </div>
-        
-        <div className={style.timePickerContainer}>
-          <p className={style.timePicker}>
-            {transactionTime}
-          </p>
-          <input onFocus={openTimePicker} ref={timePickerRef} id="timePicker" type="time" className={style.picker} />
+
+        <div>
+          <button onClick={selectBankButton} ref={bankButtonRef} className={style.radioButton}>Bank</button>
+          <button onClick={selectCashButton} ref={cashButtonRef} className={style.radioButton}>Cash</button>
         </div>
+
+        <button className={style.category}>
+          <div className={style.categoryImage}></div>
+          Categories
+        </button>
       </div>
+      <div className={style.contentWrapperTwo}>
+        <textarea className={style.note} placeholder="Note"></textarea>
 
-      <div>
-        <button className={style.radioButton}>Expense</button>
-        <button className={style.radioButton}>Income</button>
+        <input type="text" className={style.amount} value="95 lv"></input>
       </div>
-
-      <div>
-        <button className={style.radioButton}>Bank</button>
-        <button className={style.radioButton}>Cash</button>
-      </div>
-
-      <button className={style.category}>
-        <div className={style.categoryImage}></div>
-        Categories
-      </button>
-      
-      <textarea className={style.note} placeholder="Note"></textarea>
-
-      <input type="text" className={style.amount} value="95 lv"></input>
     </div>
   );
 }
