@@ -6,21 +6,14 @@ import PropTypes from 'prop-types'
 function Transaction({amount, date, time, logo, name, category, isOnHomePage = false}) {
 
     const style = isOnHomePage ? homePageStyle : defaultStyle;
-    const amountStyle = amount > 0 ? "amountPositive" : "amountNegative";
+    const amountStyle = amount >= 0 ? "amountPositive" : "amountNegative";
     const endAmount = `${isOnHomePage ? Math.abs(amount) : amount}lv`;
 
     const dateOrTime = date ? date : time;
 
     return(
         <div className={style.background}>
-            <Image
-            className={style.logo}
-            src={logo}
-            alt="logo"
-            width="40"
-            height="40">
-
-            </Image>
+            <Image className={style.logo} src={logo} alt="logo" width="40" height="40"/>
             <div className={style.nameAndCategoryWrapper}>
                 <p className={style.name}>{name}</p>
                 <p className={style.category}>{category}</p>

@@ -1,20 +1,18 @@
 .background{
     background-color: black;
     width: calc(100% - 30px); 
-    height: 65px;
+    height: 72px;
 
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     align-items: center;
-    justify-content: start;
+    justify-content: flex-start;
 
     padding: 0px 15px;
 
-    border-radius: 20px;
-    border-width: 1px;
-    border-color: white;
-    border-style: solid;
+    border-radius: 50px;
+    border-style: none;
 
     margin-bottom: 10px;
 }
@@ -52,5 +50,6 @@
 }
 
 .dateOrTime{
+    font-size: 14px;
     color: white;
 }

@@ -1,16 +1,13 @@
 
-import style from "./Home.module.css";
 import MenuButtons from "./MenuButtons/MenuButtons"
 import AddTransactionButton from "./AddTransactionButton/AddTransactionButton"
 
-function Menu({children, isInHome = true}) {
+function Menu({hide = false, isInHome = true}) {
   return (
-    <div className={style.menuWrapper}>
-        {children}
-
-        <AddTransactionButton />
-        <MenuButtons isInHome={isInHome}/>
-    </div>  
+    <>
+        <AddTransactionButton hide={hide}/>
+        <MenuButtons isInHome={isInHome} hide={hide}/>
+    </>  
   );
 }
 

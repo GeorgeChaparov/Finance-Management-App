@@ -1,6 +1,11 @@
 .allButton{
-    background-color: transparent;
-    color: white;
+    width: fit-content;
+    height: 100%;
 
+    background-color: transparent;
+
+    font-size: 20px;
     border-style: none;
+
+    padding: 0;
 }

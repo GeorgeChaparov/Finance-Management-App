@@ -2,35 +2,42 @@ import Menu from "./components/Menu/Menu";
 import style from "./page.module.css";
 import HomeSearchBar from "./SpecificComponents/HomeSearchBar/HomeSearchBar";
 import AllTransactionsButton from "./SpecificComponents/AllTransactionsButton/AllTransactionsButton";
+import Wrapper from "./components/Wrapper/Wrapper";
 
 export default function Home() {
   return (
-    <Menu>
+    <>
       <div className={style.page}>
-      <div className={style.totalBalance}>
-        <p className={style.balanceTitle}>Total Balance</p>
-        <p className={style.balanceAmount}>3,245.00lv</p>
-      </div>
+        <Wrapper margin={"25 19"} setHeight ={false}>
+          <div className={style.totalBalance}>
+            <span className={style.balanceTitle}>Total Balance</span>
+            <span className={style.balanceAmount}>3,245.00lv</span>
+          </div>
 
-      <div className={style.seperateAmountContainer}>
-        <div className={style.inBankWrapper}>
-          <p className={style.inBankTitle}>Bank</p>
-          <p className={style.inBankAmount}>3,245.00</p>
+          <div className={style.seperateAmountContainer}>
+            <div className={style.inBankWrapper}>
+              <span className={style.inBankTitle}>Bank</span>
+              <span className={style.inBankAmount}>3,245.00</span>
+            </div>
+
+            <div className={style.ceshWrapper}>
+              <span className={style.ceshTitle}>Cash</span>
+              <span className={style.ceshAmount}>9,999.99</span>
+            </div>
+          </div>
+        </Wrapper>
+        <div className={style.transactions}>
+          <Wrapper margin={"25 32 25 32"} setHeight ={false}>
+            <div className={style.titleAndButtonWrapper}>
+              Transactions 
+              <AllTransactionsButton />
+            </div>
+
+            <HomeSearchBar />
+          </Wrapper>
         </div>
-
-        <div className={style.ceshWrapper}>
-          <p className={style.ceshTitle}>Cash</p>
-          <p className={style.ceshAmount}>9,999,999.99</p>
-        </div>
       </div>
-
-      <div className={style.transactionsTitleAndButtonContainer}>
-        <p className={style.transactionsTitle}>Transactions</p>
-        <AllTransactionsButton />
-      </div>
-        <HomeSearchBar />
-      </div>
-    </Menu>
-    
+      <Menu/>
+    </>
   );
 }

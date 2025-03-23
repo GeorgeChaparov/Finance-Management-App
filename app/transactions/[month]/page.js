@@ -1,38 +1,71 @@
 import style from "./page.module.css";
 import TransactionByDay from "@/app/components/TransactionsByDay/TransactionByDay";
 import DateSelectPanelAndButton from "../SpecificComponents/DateSelectPanelAndButton/DateSelectPanelAndButton";
-import logo from "../../lidl.png"
 import CustomChart from "../SpecificComponents/CustomChart/CustomChart";
+import {monthsEnum, transactionsArray} from "@/utilities";
 
-
-export default function Transactions({params}) {
-  var transactions = [{id:0, logo: logo, name:"Food", category:"Gifts", amount:-200, date:"20.01.2024", time:"13:12"},
-                      {id:1, logo: logo, name:"dsf", category:"Transport", amount:-20, date:"22.01.2024", time:"16:31"},
-                      {id:2, logo: logo, name:"Work", category:"Transport", amount:-60, date:"20.01.2024", time:"12:23"},
-                      {id:3, logo: logo, name:"Food", category:"Food", amount:-250, date:"20.01.2024", time:"23:51"},
-                      {id:4, logo: logo, name:"dsf", category:"Food", amount:-63, date:"22.01.2024", time:"15:23"},
-                      {id:5, logo: logo, name:"Foghod", category:"Shopping", amount: -109, date:"22.01.2024", time:"22:45"},
-                      {id:6, logo: logo, name:"Food", category:"Food", amount:-300, date:"25.01.2024", time:"14:05"},
-                      {id:7, logo: logo, name:"dsf", category:"Shopping", amount:-400, date:"25.01.2024", time:"11:12"},
-                      {id:8, logo: logo, name:"Foghod", category:"Income", amount:2500, date:"08.01.2024", time:"00:45"},
-                      {id:9, logo: logo, name:"dsf", category:"Electronics", amount:-400, date:"25.01.2024", time:"11:12"},
-                      {id:10, logo: logo, name:"Foghod", category:"Car", amount:-400, date:"08.01.2024", time:"00:45"}
-  ];
-
-  const monthsEnum = {'Jan': 1, 'Feb': 2, 'Mar': 3, 'Apr': 4, 'May': 5, 'Jun': 6, 'Jul': 7, 'Aug': 8, 'Sep': 9, 'Oct': 10, 'Nov': 11, 'Dec': 12};
-  const { month } = params;
+export default async function Transactions({params}) {
+  const { month } = await params;
 
   const currentMonth = new Date().getMonth()
   const currentYear =  new Date().getFullYear()
   const date = `${month}, ${monthsEnum[month] > currentMonth ? currentYear - 1 : currentYear}`;
 
-  function GetTransactionsByDay(transactions) {
+  var transactions = transactionsArray;
+
+  var netAmount = 0;
+  var positiveAmount = 0;
+  var negativeAmount = 0;
+
+  const expensesByCategory = GetExpensesByCategory(transactions)
+  
+  const finalExpenses = expensesByCategory.slice(0, 4);
+  var otherExpenses = 0;
+  for (let i = 4; i < expensesByCategory.length; i++) {
+    const expense = expensesByCategory[i];
+    otherExpenses+= expense[1];
+  }
+
+  finalExpenses.push(["Others", otherExpenses]);
+
+  const categories = finalExpenses.map(item => item[0]);
+  const amountForCategory = finalExpenses.map(item => item[1]);
+  
+  for (let i = 0; i < transactions.length; i++) {
+    const amount = transactions[i].amount;
+    netAmount += amount;
+
+    if (amount > 0) {
+      positiveAmount += amount;
+    }else{
+      negativeAmount += amount;
+    }
+  }
+
+  transactions.sort((a, b) => {
+      
+    const dateA = a.date.replace(/(\d{2})\.(\d{2})\.(\d{4})/, '$3-$2-$1');
+    const dateB = b.date.replace(/(\d{2})\.(\d{2})\.(\d{4})/, '$3-$2-$1');
+    
+    return new Date(dateA) - new Date(dateB);
+  });
+
+  transactions.reverse();
+
+  
+  transactions = GetTransactionsByDay(transactions);
+  transactions.forEach(innerTransitions => {
+    innerTransitions = sortTransactionsByTime(innerTransitions);
+    innerTransitions.reverse();
+  })
+
+  function GetTransactionsByDay(_transactions) {
     let transactionsByDay = [];
     let currentDayGroup = [];
-    let currentDate = transactions[0].date;
+    let currentDate = _transactions[0].date;
   
-    for (let i = 0; i < transactions.length; i++) {
-      const transaction = transactions[i];
+    for (let i = 0; i < _transactions.length; i++) {
+      const transaction = _transactions[i];
   
       if (transaction.date === currentDate) {
 
@@ -81,52 +114,6 @@ export default function Transactions({params}) {
     });
   }
 
-  var netAmount = 0;
-  var positiveAmount = 0;
-  var negativeAmount = 0;
-
-  const expensesByCategory = GetExpensesByCategory(transactions)
-  
-  const finalExpenses = expensesByCategory.slice(0, 4);
-  var otherExpenses = 0;
-  for (let i = 4; i < expensesByCategory.length; i++) {
-    const expense = expensesByCategory[i];
-    otherExpenses+= expense[1];
-  }
-
-  finalExpenses.push(["Others", otherExpenses]);
-
-  const categories = finalExpenses.map(item => item[0]);
-  const amountForCategory = finalExpenses.map(item => item[1]);
-
-  
-  for (let i = 0; i < transactions.length; i++) {
-    const amount = transactions[i].amount;
-    netAmount += amount;
-
-    if (amount > 0) {
-      positiveAmount += amount;
-    }else{
-      negativeAmount += amount;
-    }
-  }
-
-  transactions.sort((a, b) => {
-      
-    const dateA = a.date.replace(/(\d{2})\.(\d{2})\.(\d{4})/, '$3-$2-$1');
-    const dateB = b.date.replace(/(\d{2})\.(\d{2})\.(\d{4})/, '$3-$2-$1');
-    
-    return new Date(dateA) - new Date(dateB);
-  });
-
-  transactions.reverse();
-
-  
-  transactions = GetTransactionsByDay(transactions);
-  transactions.forEach(innerTransitions => {
-    innerTransitions = sortTransactionsByTime(innerTransitions);
-    innerTransitions.reverse();
-  })
 
   return (
     <div className={style.page}>
