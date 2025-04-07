@@ -8,7 +8,9 @@ import homeImage from "@/public/home.png"
 import settingsImage from "@/public/settings.png"
 import { motion } from "framer-motion";
 
-function MenuButtons({isInHome, hide}) {
+type MenuButtonsProps = {isInHome: boolean, hide: boolean}
+
+function MenuButtons({isInHome, hide}: MenuButtonsProps) {
     const router = useRouter();
     
     const showStyle ={
@@ -19,11 +21,11 @@ function MenuButtons({isInHome, hide}) {
         display: "none"
     }
 
-    const loadHome = (event) =>{
+    const loadHome = () =>{
         router.push('/')
     };
 
-    const loadSettings = (event) =>{
+    const loadSettings = () =>{
         if (isInHome) {
             router.push('/settings')
         }

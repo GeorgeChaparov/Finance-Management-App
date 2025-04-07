@@ -6,7 +6,7 @@
     height: 50px;
 
     background-color: rgb(255, 255, 255);
-    background-image: url("@/public/add.png");
+    background-image: url("../../../../public/add.png");
     background-position: center;
     background-repeat: no-repeat;
 
@@ -55,15 +55,15 @@
 }
 
 .expenseButton{
-    background-image: url("@/public/expense.png");
+    background-image: url("../../../../public/expense.png");
 }
 
 .scanButton{
-    background-image: url("@/public/scan.png");
+    background-image: url("../../../../public/scan.png");
 }
 
 .incomeButton{
-    background-image: url("@/public/income.png");
+    background-image: url("../../../../public/income.png");
 }
 
 .addOptions button {

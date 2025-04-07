@@ -1,26 +1,28 @@
 import style from "./page.module.css";
-import TransactionByDay from "@/app/components/TransactionsByDay/TransactionByDay";
-import DateSelectPanelAndButton from "../SpecificComponents/DateSelectPanelAndButton/DateSelectPanelAndButton";
-import CustomChart from "../SpecificComponents/CustomChart/CustomChart";
-import {monthsEnum, transactionsArray} from "@/utilities";
+import TransactionByDay from "../../components/TransactionsByDay/TransactionByDay";
+import DateSelectPanelAndButton from "./SpecificComponents/DateSelectPanelAndButton/DateSelectPanelAndButton";
+import CustomChart from "./SpecificComponents/CustomChart/CustomChart";
+import {Months, Transaction, transactionsArray} from "../../../utilities";
 
-export default async function Transactions({params}) {
+export default async function Transactions({params}: {params:any}) {
+  type MonthsStrings = keyof typeof Months;
   const { month } = await params;
 
   const currentMonth = new Date().getMonth()
   const currentYear =  new Date().getFullYear()
-  const date = `${month}, ${monthsEnum[month] > currentMonth ? currentYear - 1 : currentYear}`;
+  const date = `${month}, ${Months[month as MonthsStrings] > currentMonth ? currentYear - 1 : currentYear}`;
 
-  var transactions = transactionsArray;
+  let transactions = transactionsArray;
 
-  var netAmount = 0;
-  var positiveAmount = 0;
-  var negativeAmount = 0;
+  let netAmount = 0;
+  let positiveAmount = 0;
+  let negativeAmount = 0;
 
   const expensesByCategory = GetExpensesByCategory(transactions)
   
   const finalExpenses = expensesByCategory.slice(0, 4);
-  var otherExpenses = 0;
+
+  let otherExpenses = 0;
   for (let i = 4; i < expensesByCategory.length; i++) {
     const expense = expensesByCategory[i];
     otherExpenses+= expense[1];
@@ -30,7 +32,7 @@ export default async function Transactions({params}) {
 
   const categories = finalExpenses.map(item => item[0]);
   const amountForCategory = finalExpenses.map(item => item[1]);
-  
+
   for (let i = 0; i < transactions.length; i++) {
     const amount = transactions[i].amount;
     netAmount += amount;
@@ -43,25 +45,23 @@ export default async function Transactions({params}) {
   }
 
   transactions.sort((a, b) => {
-      
-    const dateA = a.date.replace(/(\d{2})\.(\d{2})\.(\d{4})/, '$3-$2-$1');
-    const dateB = b.date.replace(/(\d{2})\.(\d{2})\.(\d{4})/, '$3-$2-$1');
-    
-    return new Date(dateA) - new Date(dateB);
+    const toComparable = (d:string) => d.split('.').reverse().join('');
+
+    return toComparable(a.date).localeCompare(toComparable(b.date));
   });
 
   transactions.reverse();
 
   
-  transactions = GetTransactionsByDay(transactions);
-  transactions.forEach(innerTransitions => {
+  const transactionsByDate = GetTransactionsByDay(transactions);
+  transactionsByDate.forEach(innerTransitions => {
     innerTransitions = sortTransactionsByTime(innerTransitions);
     innerTransitions.reverse();
   })
-
-  function GetTransactionsByDay(_transactions) {
+  
+  function GetTransactionsByDay(_transactions:Array<Transaction>) {
     let transactionsByDay = [];
-    let currentDayGroup = [];
+    let currentDayGroup: Transaction[] = [];
     let currentDate = _transactions[0].date;
   
     for (let i = 0; i < _transactions.length; i++) {
@@ -86,7 +86,7 @@ export default async function Transactions({params}) {
     return transactionsByDay;
   }
 
-  function GetExpensesByCategory(transactions) {
+  function GetExpensesByCategory(transactions: Transaction[]) {
     const expenseByCategory = new Map();
 
     for (let i = 0; i < transactions.length; i++) {
@@ -105,12 +105,12 @@ export default async function Transactions({params}) {
     return [...expenseByCategory].sort((a, b) => a[1] - b[1]);;
   }
 
-  function sortTransactionsByTime(transactions) {
-    return transactions.sort((a, b) => {
-      const timeA = a.time.replace(/(\d{2}):(\d{2})/, '$1:$2');
-      const timeB = b.time.replace(/(\d{2}):(\d{2})/, '$1:$2');
+  function sortTransactionsByTime(transactions: Transaction[]) {
+    return [...transactions].sort((a, b) => {
+      // return a.time.localeCompare(b.time);
       
-      return new Date(`1970-01-01T${timeA}:00`) - new Date(`1970-01-01T${timeB}:00`);
+      // If we need to handle 24-hour format specially (not sure yet):
+      return Number(a.time.replace(':', '')) - Number(b.time.replace(':', ''));
     });
   }
 
@@ -137,7 +137,7 @@ export default async function Transactions({params}) {
         <p className = {style.netAmount}>{`${netAmount}lv`}</p>
       </div>
 
-      {transactions.map((transaction, index) => <TransactionByDay key={index} transactions={transaction}/>)}   
+      {transactionsByDate.map((transactions, index) => <TransactionByDay key={index} transactions={transactions}/>)}   
     </div>
   );
 }

@@ -1,22 +1,25 @@
 import Image from "next/image";
 import defaultStyle from "./defaultTransaction.module.css"
 import homePageStyle from "./homePageTransaction.module.css"
-import PropTypes from 'prop-types'
+import { Transaction as TransactionClass} from "../../../utilities";
+type PopupPanelProps = {transaction: TransactionClass, isOnHomePage?: boolean}
 
-function Transaction({amount, date, time, logo, name, category, isOnHomePage = false}) {
+function Transaction({transaction, isOnHomePage = false}: PopupPanelProps) {
 
     const style = isOnHomePage ? homePageStyle : defaultStyle;
+    const amount = transaction.amount;
+    const date = transaction.date;
     const amountStyle = amount >= 0 ? "amountPositive" : "amountNegative";
     const endAmount = `${isOnHomePage ? Math.abs(amount) : amount}lv`;
 
-    const dateOrTime = date ? date : time;
+    const dateOrTime = date ? date : transaction.time;
 
     return(
         <div className={style.background}>
-            <Image className={style.logo} src={logo} alt="logo" width="40" height="40"/>
+            <Image className={style.logo} src={transaction.logo} alt="logo" width="40" height="40"/>
             <div className={style.nameAndCategoryWrapper}>
-                <p className={style.name}>{name}</p>
-                <p className={style.category}>{category}</p>
+                <p className={style.name}>{transaction.name}</p>
+                <p className={style.category}>{transaction.category}</p>
             </div>
             <div className={style.amountAndDateWrapper}>
 
@@ -25,16 +28,6 @@ function Transaction({amount, date, time, logo, name, category, isOnHomePage = f
             </div>
         </div>
     )
-}
-
-Transaction.propTypes ={
-    logo: PropTypes.Image,
-    name: PropTypes.string,
-    category: PropTypes.string,
-    amount: PropTypes.int,
-    name: PropTypes.string,
-    date: PropTypes.string,
-    time: PropTypes.string
 }
 
 export default Transaction;

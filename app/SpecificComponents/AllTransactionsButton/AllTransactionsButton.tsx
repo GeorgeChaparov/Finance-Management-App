@@ -2,15 +2,15 @@
 
 import style from "./AllTransactionsButton.module.css"
 import { useRouter } from "next/navigation";
-import { monthsEnum } from "../../../utilities";
+import { Months } from "../../../utilities";
 
 function AllTransactionsButton() {
     const router = useRouter();
 
     const currentMonth = new Date().getMonth();
 
-    const goToTransactions = (event) => {
-        router.push(`/transactions/${monthsEnum[currentMonth]}`)
+    const goToTransactions = () => {
+        router.push(`/transactions/${Months[currentMonth]}`)
     }
 
     return(

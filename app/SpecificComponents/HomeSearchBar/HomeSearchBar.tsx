@@ -19,7 +19,8 @@ function HomeSearchBar() {
                 <Image className={style.searchIcon} src={searchIcon} alt="settings image"></Image>
             </div> 
             {transactions.map(transaction => 
-                    <Transaction key={transaction.id} logo={transaction.logo} name={transaction.name} category={transaction.category} amount={transaction.amount} date={transaction.date} isOnHomePage = {true}/>)}
+                <Transaction key={transaction.id} transaction={transaction} isOnHomePage = {true}/>
+            )}
         </>
     );
 }

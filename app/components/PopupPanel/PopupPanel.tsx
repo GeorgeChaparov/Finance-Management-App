@@ -1,6 +1,10 @@
-function PopupPanel({width="calc(100% - 20px)", height="300px", left="10px", display="flex", borderRadius ="20px", elements}) {
+import { CSSProperties, ReactNode } from "react";
 
-    const styles ={
+type PopupPanelProps = {width?: string, height?: string, left?: string, display?: string, borderRadius?: string, children?: ReactNode}
+
+function PopupPanel({width="calc(100% - 20px)", height="300px", left="10px", display="flex", borderRadius ="20px", children}: PopupPanelProps) {
+
+    const styles: CSSProperties ={
         width: width,
         height: height,
         
@@ -13,10 +17,9 @@ function PopupPanel({width="calc(100% - 20px)", height="300px", left="10px", dis
         
         display: display,
 
-        flexDirection: "row",
         flexWrap: "wrap",
         alignItems: "center",
-        flexDirection: "center",
+        flexDirection: "row",
         justifyContent: "center",
 
 
@@ -25,7 +28,7 @@ function PopupPanel({width="calc(100% - 20px)", height="300px", left="10px", dis
 
     return(
         <div style={styles}>
-            {elements}
+            {children}
         </div>
     );
 }

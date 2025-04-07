@@ -1,12 +1,15 @@
 "use client"
 
-import { motion } from "framer-motion";
+import { AnimationControls, motion, TargetAndTransition, VariantLabels, Variants } from "framer-motion";
+import { MouseEventHandler } from "react";
 
-function DummyAddTransactionButton({ActionCallback, variants, controls, _style, text = ""}) {
+type DummyAddTransactionButtonProps = {actionCallback: MouseEventHandler<HTMLButtonElement>, variants: Variants, controls: boolean | TargetAndTransition | VariantLabels | AnimationControls, style: object, text?: string}
 
-    let style = {
+function DummyAddTransactionButton({actionCallback, variants, controls, style, text = ""}: DummyAddTransactionButtonProps) {
+
+    let _style = {
         zIndex: 3,
-        position: "fixed",
+        position: "absolute",
 
         width: "50px",
         height: "50px",
@@ -27,13 +30,13 @@ function DummyAddTransactionButton({ActionCallback, variants, controls, _style, 
         borderWidth: "0"
     }
 
-    style = {...style, _style};
+    style = {..._style, ...style};
     
     return(
         <motion.button 
         initial="init" animate={controls}
         variants= {variants}
-        onClick={ActionCallback} style={{...style}}>
+        onClick={actionCallback} style={{...style}}>
             {text}
         </motion.button>
     );

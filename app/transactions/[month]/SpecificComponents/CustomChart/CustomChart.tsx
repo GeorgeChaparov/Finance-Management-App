@@ -2,8 +2,11 @@
 
 import Chart from 'chart.js/auto'
 import { Doughnut } from "react-chartjs-2";
+import { ArcElement } from "chart.js";
 
-function CustomChart({categories, amountForCategory}) {
+type CustomChartProps = {categories: any, amountForCategory: number[]};
+function CustomChart({categories, amountForCategory}: CustomChartProps) {
+    Chart.register(ArcElement);
 
     return(
         <Doughnut 

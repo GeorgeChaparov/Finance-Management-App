@@ -1,22 +1,25 @@
 import style from "./transactionByDay.module.css"
 import Transaction from "../Transaction/Transaction"
 import Menu from "../Menu/Menu";
-import {weekDays} from "../../../utilities";
+import {weekDays, Transaction as TransactionClass} from "../../../utilities";
 import Loading from "../Loading/Loading";
 import { Suspense } from "react";
 
-function TransactionByDay({transactions}) {
+type TransactionByDayProps = {transactions: Array<TransactionClass>}
+
+function TransactionByDay({transactions}: TransactionByDayProps) {
     const date = transactions[0].date;
     
     const day = weekDays[new Date(date.replace(/(\d{2})\.(\d{2})\.(\d{4})/, '$3-$2-$1')).getDay()];
 
-    var endAmount = 0;
+    let endAmount = 0;
 
     transactions.forEach(transaction => {
-        endAmount += transaction.amount})
+        endAmount += transaction.amount
+    })
 
-    var amountStyle = endAmount > 0 ? "amountPositive" : "amountNegative";
-    var amount = `${endAmount}lv`;
+    const amountStyle = endAmount > 0 ? "amountPositive" : "amountNegative";
+    const amount = `${endAmount}lv`;
 
     return(
         <Suspense fallback={<Loading />}>
@@ -31,7 +34,7 @@ function TransactionByDay({transactions}) {
                     </div>
                 </div>
                 {transactions.map(transaction => 
-                        <Transaction key={transaction.id} logo={transaction.logo} name={transaction.name} category={transaction.category} amount={transaction.amount} time={transaction.time}/>)}
+                        <Transaction key={transaction.id} transaction = {transaction}/>)}
             </div>
             <Menu/>
         </Suspense>

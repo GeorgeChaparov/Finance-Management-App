@@ -4,8 +4,11 @@ import { useEffect, useState } from "react";
 import style from "./AddTransactionButton.module.css"
 import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence, useAnimationControls } from "framer-motion";
+import { toggleElementScroll } from "../../../../utilities";
 
-function AddTransactionButton({hide}) {
+type AddTransactionButtonProps = {hide: boolean}
+
+function AddTransactionButton({hide}: AddTransactionButtonProps) {
     const router = useRouter();
     const controls = useAnimationControls();
     const [showAddPanel, setShowAddPanel] = useState(false);
@@ -14,22 +17,22 @@ function AddTransactionButton({hide}) {
         controls.start(!showAddPanel ? "init" : "rotate");
     },[showAddPanel, controls])
 
-    const showAndHideAddOptions = (event) =>{
-        document.body.classList.toggle("disableScroll");
+    const showAndHideAddOptions = () =>{
+        toggleElementScroll(document.body);
         setShowAddPanel(!showAddPanel);
     }
 
-    const loadScan = (event) =>{
+    const loadScan = () =>{
         //router.push('/')
     };
 
-    const loadIncome = (event) =>{
+    const loadIncome = () =>{
         document.body.classList.toggle("disableScroll");
         setShowAddPanel(!showAddPanel);
         setTimeout(() => {router.push('/transactions/add/income')}, 200)
     };
 
-    const loadExpense = (event) =>{
+    const loadExpense = () =>{
         document.body.classList.toggle("disableScroll");
         setShowAddPanel(!showAddPanel);
         setTimeout(() => {router.push('/transactions/add/expense')}, 200)
