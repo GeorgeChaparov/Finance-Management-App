@@ -26,12 +26,15 @@ body {
   padding: 0;
 }
 
-input, body, button{
+input, body, button, h1, h2, h3, h4, h5, h6, a, p{
   font-family: "Roboto", sans-serif !important;
   font-optical-sizing: auto;
   font-weight: 500;
   font-style: normal;
   font-variation-settings:"wdth" 100;
+
+  margin: 0;
+  padding: 0;
 }
 
 input:focus {
@@ -40,13 +43,13 @@ input:focus {
 
 .amountPositive{
   font-size: 20px;
-  color: green;
+  color: #56C35D;
   font-weight: bold;
 }
 
 .amountNegative{
   font-size: 20px;
-  color: red;
+  color: #C14B4B;
   font-weight: bold;
 }
 

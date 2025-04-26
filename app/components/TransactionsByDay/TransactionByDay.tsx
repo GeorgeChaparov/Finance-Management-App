@@ -19,23 +19,22 @@ function TransactionByDay({transactions}: TransactionByDayProps) {
     })
 
     const amountStyle = endAmount > 0 ? "amountPositive" : "amountNegative";
-    const amount = `${endAmount}lv`;
 
     return(
         <Suspense fallback={<Loading />}>
-            <div className={style.container}>
+            <section className={style.container}>
                 <div className={style.infoContainer}>
                     <div className={style.dateWrapper}>
                         <p className={style.date}>{date}</p>
                         <p className={style.dayOfWeek}>{day}</p>
                     </div>
                     <div className={style.amountWrapper}>
-                        <p className={amountStyle}>{amount}</p>
+                        <p className={amountStyle}>{`${endAmount}lv`}</p>
                     </div>
                 </div>
                 {transactions.map(transaction => 
                         <Transaction key={transaction.id} transaction = {transaction}/>)}
-            </div>
+            </section>
             <Menu/>
         </Suspense>
     )

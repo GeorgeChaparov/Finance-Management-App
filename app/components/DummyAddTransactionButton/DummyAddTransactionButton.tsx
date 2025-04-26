@@ -14,7 +14,7 @@ function DummyAddTransactionButton({actionCallback, variants, controls, style, t
         width: "50px",
         height: "50px",
 
-        backgroundColor: "rgb(255, 255, 255)",
+        backgroundColor: "rgb(194, 194, 194)",
         backgroundImage: "url('/add.png')",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",

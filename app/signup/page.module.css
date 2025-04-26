@@ -40,7 +40,7 @@
     margin-bottom: 10vh;
 }
 
-.username, .password {
+.username, .password, .email {
     width: 100%;
     height: 24px;
 
@@ -53,25 +53,12 @@
     font-size: 16px;
 }
 
-.username::placeholder, .password::placeholder {
+.username::placeholder, .password::placeholder, .email::placeholder {
     color: black;
 }
 
-.password {
+.password, .username {
     margin-top: min(8vh, 66px);
-}
-
-.forgotPassword {
-    width: 100%;
-    height: fit-content;
-
-    text-decoration: none;
-    color: white;
-
-    font-size: 16px;
-    text-align: end;
-
-    margin-top: 12px;
 }
 
 .submitButton {

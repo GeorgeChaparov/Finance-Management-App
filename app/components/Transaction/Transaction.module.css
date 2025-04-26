@@ -1,6 +1,6 @@
 .background{
     background-color: black;
-    width: calc(100% - 30px); 
+    width: calc(100% - 35px); 
     height: 72px;
 
     display: flex;
@@ -9,11 +9,14 @@
     align-items: center;
     justify-content: flex-start;
 
-    padding: 0px 15px;
+    padding: 0px 20px 0px 15px;
 
     border-radius: 50px;
     border-style: none;
 
+}
+
+.background:not(:last-of-type) {
     margin-bottom: 10px;
 }
 
@@ -31,12 +34,12 @@
 }
 
 .name{
-    font-weight: bold;
+    font-size: 20px;
     color: white;
 }
 
 .category{
-    font-size: small;
+    font-size: 16px;
     color: white;
 }
 
@@ -47,9 +50,14 @@
 .amountAndDateWrapper p{
     text-align: right;
     line-height: 10px;
+    font-size: 20px;
 }
 
 .dateOrTime{
     font-size: 14px;
     color: white;
+}
+
+.category, .dateOrTime {
+    margin-top: 21px;
 }

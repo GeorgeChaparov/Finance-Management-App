@@ -27,6 +27,8 @@
 
     width: 100px;
     height: 100%;
+
+    color: black !important;
 }
 
 .homeImage, .settingsImage{
@@ -38,6 +40,8 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
+
+    color: black !important;
 
     width: 100px;
     height: 100%;

@@ -1,0 +1,46 @@
+.category {
+    width: calc(100% - 28px);
+    height: fit-content;
+
+    padding: 12px 14px;
+    margin-top: 10px;
+
+    background-color: transparent;
+
+    border: white solid 1px;
+    border-radius: 15px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.category > button:first-of-type {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    margin-right: 12px;
+
+    color: white;
+    font-size: 20px;
+    text-align: justify;
+
+    background-color: transparent;
+    border: none;
+
+    flex: 1;
+}
+
+.category > button:first-of-type > img {
+    margin-right: 12px;
+}
+
+.deleteButton {
+    width: fit-content;
+    height: fit-content;
+
+    background-color: transparent;
+    border: none;
+}

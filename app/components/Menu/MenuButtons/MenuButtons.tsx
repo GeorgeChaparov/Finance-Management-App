@@ -6,13 +6,22 @@ import { useRouter } from 'next/navigation'
 import Image from "next/image";
 import homeImage from "@/public/home.png"
 import settingsImage from "@/public/settings.png"
-import { motion } from "framer-motion";
+import { motion, useAnimationControls} from "framer-motion";
+import { useEffect, useState } from "react";
 
 type MenuButtonsProps = {isInHome: boolean, hide: boolean}
 
 function MenuButtons({isInHome, hide}: MenuButtonsProps) {
     const router = useRouter();
-    
+    const [showMenu, setShowMenu] = useState(true);
+    const animationControl = useAnimationControls() 
+
+    useEffect(() => {
+        if (hide) {
+            animationControl.start("animate").then(() => {setShowMenu(false)});
+        }
+    })
+
     const showStyle ={
         display: "block"
     }
@@ -27,14 +36,18 @@ function MenuButtons({isInHome, hide}: MenuButtonsProps) {
 
     const loadSettings = () =>{
         if (isInHome) {
-            router.push('/settings')
+            router.push('/profile_settings')
         }
     };
 
     return(
-        <motion.div 
-        initial = {hide ? {translateY: 0} : ""}
-        animate = {hide ? {translateY: 60, transition:{ease: "easeIn"}} : ""}
+        showMenu && <motion.div 
+        initial = {"init"}
+        animate = {animationControl}
+        variants={{
+            init: {translateY: hide ? 0 : ""},
+            animate: {translateY: hide ? 60 : "", transition: {ease: "easeIn"}}
+        }}
         className={style.menu}>
             <div onClick={loadHome} className={style.homeContainer}>
                 <Image className={style.homeImage} src={homeImage} alt="home image"/>
@@ -46,6 +59,7 @@ function MenuButtons({isInHome, hide}: MenuButtonsProps) {
                 <p style ={isInHome ? hideStyle : showStyle}>Settings</p>
             </div>
         </motion.div>
+        
     );
 }
 

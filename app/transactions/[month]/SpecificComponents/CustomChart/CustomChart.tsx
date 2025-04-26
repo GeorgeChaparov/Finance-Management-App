@@ -34,7 +34,7 @@ function CustomChart({categories, amountForCategory}: CustomChartProps) {
                             },
                             usePointStyle: true, // Use point style for legend
                             pointStyle: 'circle', // Options: 'circle' for round, 'rect' for cube
-                            padding: 25,
+                            padding: 20,
                         }
                     }
                 },

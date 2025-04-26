@@ -3,6 +3,7 @@ import TransactionByDay from "../../components/TransactionsByDay/TransactionByDa
 import DateSelectPanelAndButton from "./SpecificComponents/DateSelectPanelAndButton/DateSelectPanelAndButton";
 import CustomChart from "./SpecificComponents/CustomChart/CustomChart";
 import {Months, Transaction, transactionsArray} from "../../../utilities";
+import BackgroundCircles from "@/app/components/BackgroundCircles/BackgroundCircles";
 
 export default async function Transactions({params}: {params:any}) {
   type MonthsStrings = keyof typeof Months;
@@ -68,10 +69,8 @@ export default async function Transactions({params}: {params:any}) {
       const transaction = _transactions[i];
   
       if (transaction.date === currentDate) {
-
         currentDayGroup.push(transaction);
       } else {
-
         transactionsByDay.push(currentDayGroup);
 
         currentDayGroup = [transaction];
@@ -113,29 +112,52 @@ export default async function Transactions({params}: {params:any}) {
       return Number(a.time.replace(':', '')) - Number(b.time.replace(':', ''));
     });
   }
-
-
+  
   return (
     <div className={style.page}>
+      <BackgroundCircles  
+      circles={[
+        {
+          variants:{init: {top: "200px", left: "-320px"}, animate: {left:"calc(50% - 300px)"}}, 
+          radius: 320
+        },
+        {
+          variants:{init: {top: "100px", right: "-260px"}, animate: {left:"calc(50% - 35px)"}, },
+          radius: 260
+        },
+        {
+          variants:{init: {top: "22px", right: "-150px"}, animate: {left:"calc(50% - 120px)"}, },
+          radius: 150
+        },
+        {
+          variants:{init: {bottom: "70px", right: "-420px"}, animate: {left:"calc(50% - 160px)"}}, 
+          radius: 420
+        },
+      ]} 
+      transitionDelay={0.1}
+      height="100vh">
+      </BackgroundCircles>         
       <div className = {style.titleAnaDateWrapper}>
         <p className = {style.title}>Transactions</p>
 
         <DateSelectPanelAndButton text={date}/>
       </div>
 
-      <div className={style.chartContainer}>
-        <div className={style.chartInnerDiv}>
-          <CustomChart categories = {categories} amountForCategory = {amountForCategory}/>    
-        </div>
-      </div>
-      
-      <div className = {style.netAmountContainer}>
-        <p className = "amountPositive">{`${positiveAmount}lv`}</p>
-        <p>{`-`}</p>
-        <p className = "amountNegative">{`${Math.abs(negativeAmount)}lv`}</p>
-        <p>{`=`}</p>
-        <p className = {style.netAmount}>{`${netAmount}lv`}</p>
-      </div>
+      <section className={style.statisticsContainer + " " + style.backgroundBlur}>
+        <section className={style.chartContainer}>
+          <div className={style.chartInnerDiv}>
+            <CustomChart categories = {categories} amountForCategory = {amountForCategory}/>    
+          </div>
+        </section>
+
+        <section className = {style.netAmountContainer}>
+          <p className = "amountPositive">{`${positiveAmount}lv`}</p>
+          <p>{`-`}</p>
+          <p className = "amountNegative">{`${Math.abs(negativeAmount)}lv`}</p>
+          <p>{`=`}</p>
+          <p className = {style.netAmount}>{`${netAmount}lv`}</p>
+        </section>
+      </section>
 
       {transactionsByDate.map((transactions, index) => <TransactionByDay key={index} transactions={transactions}/>)}   
     </div>

@@ -43,11 +43,14 @@ const toggleElementScroll = (element: HTMLElement) =>{
     element.classList.toggle("disableScroll");
 }
 
+const backgroundAnimation = {duration: 0.4, delay: 0.35}
+
 export {
     weekDays,
     Months,
     transactionsArray,
-    toggleElementScroll
+    toggleElementScroll,
+    backgroundAnimation
 };
 
 export type { Transaction };

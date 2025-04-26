@@ -1,9 +1,7 @@
-import style from "./page.module.css"
-import BackgroundCircles from "../components/BackgroundCircles/BackgroundCircles";
-import { backgroundAnimation } from "@/utilities";
-import Button from "../components/Basic/Button/Button";
-import Input from "../components/Basic/Input/Input";
 import AnimatedFormBackground from "../components/AnimatedFormBackground/AnimatedFormBackground";
+import BackgroundCircles from "../components/BackgroundCircles/BackgroundCircles";
+import style from "./page.module.css"
+import { backgroundAnimation } from "@/utilities";
 
 export default function Page() {
   return (
@@ -24,17 +22,17 @@ export default function Page() {
           },
         ]}>
         </BackgroundCircles>
-        <AnimatedFormBackground 
+        <AnimatedFormBackground
         transition={{delay: backgroundAnimation.delay, duration: backgroundAnimation.duration}}
         animationVariants={{
           init: {bottom: "-714px"}, animate: {top: "max(50% - 357px , calc(50% - ((100% - 100px) / 2))) "}
         }}
         className={style.backgroundBlur}>
-          <p className={style.title}>Log In</p>
-          <Input className={style.username} type="text" placeholder="Username"/>
-          <Input className={style.password} type="password" placeholder="Password"/>
-          <a className={style.forgotPassword} href="http://">Forgot password?</a>
-          <Button className={style.submitButton} events={["click"]} callbacks={[]} type="submit">Log In</Button>
+          <h1 className={style.title}>Welcome</h1>
+          <div className={style.wrapper}>            
+            <a className={style.signIn} href="/signup" >Sign In</a>
+            <a className={style.logIn} href="/login">Have an account? <br />Log in here</a>
+          </div>
         </AnimatedFormBackground>
     </div>
   );

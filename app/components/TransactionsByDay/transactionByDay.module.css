@@ -1,5 +1,14 @@
 .container{
-    width: 100%;
+    width: calc(100% - 32px);
+    height: fit-content;
+
+    backdrop-filter: blur(25px);
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 25px;
+    border-style: none;
+
+    margin-top: 18px;
+    padding: 16px;
 
     display: flex;
     flex-direction: column;
@@ -8,13 +17,15 @@
 }
 
 .infoContainer{
-    width: calc(100% - 30px);
+    width: 100%;
     height: fit-content;
 
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-between;
+
+    margin-bottom: 21px;
 }
 
 .dateWrapper{
@@ -22,13 +33,11 @@
 }
 
 .date{
-    font-weight: bold;
-    color: white;
+    font-size: 20px;
 }
 
 .dayOfWeek{
-    font-size: small;
-    color: white;
+    font-size: 16px;
 }
 
 .amountWrapper{

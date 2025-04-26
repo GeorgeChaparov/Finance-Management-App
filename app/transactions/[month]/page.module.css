@@ -2,7 +2,7 @@
   width: 100%;
   height: fit-content;
   
-  margin-bottom: 85px;
+  margin-bottom: 90px;
   
   display: flex;
   justify-content: flex-start;
@@ -13,26 +13,47 @@
 
 .titleAnaDateWrapper{
   width: calc(100% - 30px);
+  height: fit-content;
 
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   flex-wrap: nowrap;
   align-items: center;
+
+  background-color: rgba(0, 0, 0, 0.86);
+  backdrop-filter: blur(25px);
 }
 
 .title{
   color: white;
-  font-size: x-large;
+  font-size: 24px;
+
+  margin: 10px 0;
+}
+
+.statisticsContainer {
+  width: calc(100% - 50px);
+  height: fit-content;
+
+  padding: 12px 25px;
+
+  background-color: rgba(255, 255, 255, 0.3);
+
+  border-radius: 25px;
+}
+
+.backgroundBlur {
+  backdrop-filter: blur(45px);
 }
 
 .chartContainer{
-  width: calc(100% - 30px);
+  width: 100%;
   height: 200px;
 
   display: flex;
 
-  background-color: white;
+  background-color: black;
   border-radius: 25px;
 
   margin-bottom: 5px;
@@ -48,22 +69,26 @@
 }
 
 .netAmountContainer{
-  background-color: white;
-
-  width: calc(100% - 30px);
-
+  width: 100%;
+  height: 27px;
+  
+  background-color: black;
+  
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
 
   border-radius: 20px;
+
+  color: white;
 }
 
 .netAmountContainer p{
-  line-height: 5px;
+  font-size: 15px;
 }
 
 .netAmount{
   font-weight: bold;
+  color: white;
 }

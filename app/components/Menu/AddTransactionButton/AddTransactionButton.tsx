@@ -5,6 +5,7 @@ import style from "./AddTransactionButton.module.css"
 import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence, useAnimationControls } from "framer-motion";
 import { toggleElementScroll } from "../../../../utilities";
+import Button from "../../Basic/Button/Button";
 
 type AddTransactionButtonProps = {hide: boolean}
 
@@ -63,7 +64,7 @@ function AddTransactionButton({hide}: AddTransactionButtonProps) {
                             animate={{translate: "0px 0px"}}
                             exit={{translate: "102px 104px"}}
                             className={style.expenseOption}> 
-                                <button onClick={loadExpense} className={style.expenseButton}></button>
+                                <Button events={["click"]} callbacks={[loadExpense]} className={style.expenseButton}></Button>
                                 <motion.p 
                                 initial={optionsTextVariants.init} 
                                 animate={optionsTextVariants.animate}
@@ -78,7 +79,7 @@ function AddTransactionButton({hide}: AddTransactionButtonProps) {
                             exit={{translateY: "155px"}}
                             className={style.scanAndCloseOptions}>
                                 <div className={style.scanOptions}> 
-                                    <button onClick={loadScan} className={style.scanButton}></button>
+                                    <Button events={["click"]} callbacks={[loadScan]} className={style.scanButton}></Button>
                                     <motion.p
                                     initial={optionsTextVariants.init} 
                                     animate={optionsTextVariants.animate}
@@ -93,7 +94,7 @@ function AddTransactionButton({hide}: AddTransactionButtonProps) {
                             animate={{translate: "0px 0px"}}
                             exit={{translate: "-102px 104px"}}
                             className={style.incomeOptions}> 
-                                <button onClick={loadIncome} className={style.incomeButton}></button>
+                                <Button events={["click"]} callbacks={[loadIncome]} className={style.incomeButton}></Button>
                                 <motion.p
                                 initial={optionsTextVariants.init} 
                                 animate={optionsTextVariants.animate}
