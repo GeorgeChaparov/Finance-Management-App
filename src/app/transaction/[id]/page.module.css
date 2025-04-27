@@ -1,0 +1,62 @@
+.page {
+    width: calc(100% - 32px);
+    height: fit-content;
+
+    padding: 40px 16px;
+}
+
+.infoWrapper {
+    width: 100%;
+    height: fit-content;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.titleAndTypeWrapper, .dateWrapper{
+    width: fit-content;
+    height: fit-content;
+
+    display: flex;
+    flex-direction: column;
+
+    color: white;
+}
+
+.title, .date {
+    font-size: 20px;
+}
+
+.date {
+    font-size: 20px;
+    text-align: right;
+}
+
+.type {
+    font-size: 12px;
+}
+
+.dayOfWeek {
+    font-size: 12px;
+    text-align: right;
+}
+
+.totalAmount {
+    width: 100%;
+    height: fit-content;
+
+    text-align: right;
+
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+
+.products {
+    width: 100%;
+    height: fit-content;
+
+    padding-bottom: 55px;
+}

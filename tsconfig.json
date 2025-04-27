@@ -111,7 +111,7 @@
     ]
   },
   "include": [
-    "types/**/*.ts",
+    "src/types/**/*.ts",
     "src",
     ".next/types/**/*.ts",
     "next-env.d.ts",
