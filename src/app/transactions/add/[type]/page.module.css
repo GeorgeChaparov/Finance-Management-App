@@ -134,7 +134,7 @@
     width: 16px;
     height: 16px;
 
-    background-image: url("@/public/categoryIcon.png");
+    background-image: url("/public/categoryIcon.png");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;

@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  nextjs:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=secret
+      - DB_NAME=counter_db
+
+      - NODE_ENV=development
+    depends_on:
+      - db
+      
+    volumes:
+      - ./:/app
+      - /app/node_modules  # Prevent host/node_modules override
+    command: npm run dev
+
+  db:
+    image: mysql:8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+      - MYSQL_DATABASE=counter_db
+    volumes:
+      - MySQL_UniProject:/var/lib/mysql
+    ports:
+    - "3307:3306"
+
+volumes:
+  MySQL_UniProject:
