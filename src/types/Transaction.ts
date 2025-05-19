@@ -1,8 +1,6 @@
-import { StaticImageData } from "next/image";
-
 class Transaction{
     id: number;
-    logo: StaticImageData;
+    logo: any;
     name: string;
     category: string;
     amount: number;
@@ -10,7 +8,7 @@ class Transaction{
     time: string;
     isSubscription: boolean;
 
-    constructor(_id: number, _logo: StaticImageData, _name: string, _category: string, _amount: number, _date: string, _time: string, _isSubscription: boolean)
+    constructor(_id: number, _logo: any, _name: string, _category: string, _amount: number, _date: string, _time: string, _isSubscription: boolean)
     {
         this.id = _id;
         this.logo = _logo;

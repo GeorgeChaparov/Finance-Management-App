@@ -12,10 +12,13 @@
     "@types/next": "^9.0.0",
     "chart.js": "^4.4.4",
     "framer-motion": "^12.5.0",
+    "mysql2": "^3.14.1",
     "next": "^15.2.3",
+    "next-auth": "^5.0.0-beta.27",
     "react": "^18",
     "react-chartjs-2": "^5.2.0",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "sharp": "^0.34.1"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",

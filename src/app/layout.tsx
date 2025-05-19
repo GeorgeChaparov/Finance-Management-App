@@ -3,7 +3,7 @@ import "./globals.css";
 
 import { Roboto } from 'next/font/google'
  
-const roboto = Roboto();
+const roboto = Roboto({subsets: ["cyrillic"]});
 
 export default function RootLayout({ children }: {children: ReactNode}) {
   return (
