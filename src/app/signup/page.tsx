@@ -4,6 +4,7 @@ import { backgroundAnimation } from "@/src/utilities";
 import AnimatedFormBackground from "@/src/components/animated-form-background/AnimatedFormBackground";
 import Input from "@/src/components/basic/input/Input";
 import Button from "@/src/components/basic/button/Button";
+import { FormEvent } from "react";
 
 export default function Page() {
   return (
@@ -28,11 +29,12 @@ export default function Page() {
         animationVariants={{
           init: {bottom: "-714px"}, animate: {top: "max(50% - 357px , calc(50% - ((100% - 100px) / 2))) "}
         }}
-        className={style.backgroundBlur}>
+        className={style.backgroundBlur}
+        submitCallbackType={"createUser"}>
           <p className={style.title}>Sign Up</p>
-          <Input className={style.email} type="email" placeholder="Email"/>
-          <Input className={style.username} type="text" placeholder="Username"/>
-          <Input className={style.password} type="password" placeholder="Password"/>
+          <Input className={style.email} type="email" placeholder="Email" attributes={{required: true}}/>
+          <Input className={style.username} type="text" placeholder="Username" attributes={{required: true}}/>
+          <Input className={style.password} type="password" placeholder="Password" attributes={{required: true}}/>
           <Button className={style.submitButton} type="submit">Sign Up</Button>
         </AnimatedFormBackground>
     </div>

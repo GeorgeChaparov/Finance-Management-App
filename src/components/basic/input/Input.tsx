@@ -2,11 +2,10 @@
 
 import { HTMLInputTypeAttribute, useEffect, useRef } from "react";
 
-type inputProps = { className: string,  callbacks?: Function[],  events?: string[],  type?:  HTMLInputTypeAttribute, placeholder?: string }  
+type inputProps = { className: string,  callbacks?: Function[],  events?: string[],  type?:  HTMLInputTypeAttribute, placeholder?: string, attributes?: Object}  
 
-export default function Input({className, callbacks, events, type = "text", placeholder=""} : inputProps) {
+export default function Input({className, callbacks, events, type = "text", placeholder="", attributes={}} : inputProps) {
     const buttonRef: any = useRef(null)
-
     useEffect(() => {
         events?.forEach((event, index) => {
             buttonRef.current.addEventListener(event, callbacks?.[index]);
@@ -14,6 +13,6 @@ export default function Input({className, callbacks, events, type = "text", plac
     }, [buttonRef, events, callbacks])
 
   return (
-    <input ref={buttonRef} className={className} type={type} placeholder = {placeholder}/>
+    <input ref={buttonRef} className={className} type={type} placeholder = {placeholder} {...attributes}/>
   );
-} 
+}

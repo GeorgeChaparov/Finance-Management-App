@@ -31,8 +31,8 @@ export default function Page() {
         }}
         className={style.backgroundBlur}>
           <p className={style.title}>Log In</p>
-          <Input className={style.username} type="text" placeholder="Username"/>
-          <Input className={style.password} type="password" placeholder="Password"/>
+          <Input className={style.email} type="text" placeholder="Email" attributes={{required: true, autoComplete: "true"}}/>
+          <Input className={style.password} type="password" placeholder="Password" attributes={{required: true, autoComplete: "true"}}/>
           <a className={style.forgotPassword} href="http://">Forgot password?</a>
           <Button className={style.submitButton} events={["click"]} callbacks={[]} type="submit">Log In</Button>
         </AnimatedFormBackground>

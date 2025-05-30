@@ -7,16 +7,25 @@ import Input from "@/src/components/basic/input/Input";
 import { Transaction as TransactionClass } from "@/src/types/Transaction";
 import Transaction from "@/src/components/transaction/Transaction";
 import Menu from "@/src/components/menu/Menu";
+import { getUser } from "@/src/lib/user";
 
-export default function Home() {
+export default async function Home() {
   const currentMonth = new Date().getMonth();
   const transactions = transactionsArray;
 
+  const user = await getUser(1);
+
+  const formatter = new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  });
+
+  
   return (
     <>
       <div className={style.page}>
-        <BackgroundCircles 
-       circles={[
+        <BackgroundCircles
+        circles={[
         {
           variants:{init: {top: "200px", left: "-320px"}, animate: {left:"calc(50% - 300px)"}}, 
           radius: 320
@@ -40,18 +49,18 @@ export default function Home() {
         <section className={style.moneySection}>
           <div className={style.totalBalance}>
             <span className={style.balanceTitle}>Total Balance</span>
-            <span className={style.balanceAmount}>3,245.00lv</span>
+            <span className={style.balanceAmount}>{formatter.format(Number(user.cashAmount) + Number(user.bankAmount))}lv</span>
           </div>
 
           <div className={style.seperateAmountContainer}>
             <div className={style.inBankWrapper}>
               <span className={style.inBankTitle}>Bank</span>
-              <span className={style.inBankAmount}>3,245.00</span>
+              <span className={style.inBankAmount}>{formatter.format(user.bankAmount)}</span>
             </div>
 
             <div className={style.ceshWrapper}>
               <span className={style.ceshTitle}>Cash</span>
-              <span className={style.ceshAmount}>9,999.99</span>
+              <span className={style.ceshAmount}>{formatter.format(user.cashAmount)}</span>
             </div>
           </div>
         </section>
