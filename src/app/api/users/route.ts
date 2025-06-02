@@ -1,33 +1,39 @@
 import { NextRequest, NextResponse } from "next/server";
+import { CreateUserRequest } from "@/src/types/Users";
+import { getUserByEmail, createUser} from "@/src/lib/user";
 
-// POST handler (User Creation)
 export async function POST(request: NextRequest) {
   try {
-    const userData: UserData = await request.json();
+    const userData: CreateUserRequest = await request.json();
+    const username = userData.username;
+    const password = userData.password;
+    const email = userData.email.toLowerCase();
 
-    // Validate input
-    if (!userData.name || !userData.email) {
+    if (!username || !email || !password) {
       return NextResponse.json(
         { error: 'Name and email are required' },
         { status: 400 }
       );
     }
 
-    // In a real application:
-    // 1. Validate email format
-    // 2. Check for duplicate users
-    // 3. Save to database (e.g., Prisma, MongoDB)
-    console.log('Creating user:', userData);
+    if (await getUserByEmail(email)) {
+      return NextResponse.json(
+        { error: 'This email is already used' },
+        { status: 400 }
+      );
+    }
 
-    // Simulate created user object with ID
-    const createdUser = {
-      id: Date.now().toString(),  // Mock ID generation
-      ...userData,
-      createdAt: new Date()
-    };
+    const newUserId = await createUser(username, email, password)
+    if (!newUserId) {
+      return NextResponse.json(
+        { error: 'Internal server error' },
+        { status: 501 }
+      );
+    }
 
-    return NextResponse.json(createdUser, { status: 201 });
-    
+    console.log('Creating user:', {id: newUserId, ...userData});
+
+    return NextResponse.json(newUserId, { status: 201 });  
   } catch (error) {
     return NextResponse.json(
       { error: 'Internal Server Error' },
