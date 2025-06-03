@@ -120,7 +120,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "src/lib/db.js"  ],
+, "src/lib/database/db.js"  ],
   "exclude": [
     "node_modules"
   ]

@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@types/next": "^9.0.0",
+    "bcrypt": "^6.0.0",
     "chart.js": "^4.4.4",
     "framer-motion": "^12.5.0",
     "mysql2": "^3.14.1",
@@ -18,9 +19,11 @@
     "react": "^18",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18",
-    "sharp": "^0.34.1"
+    "sharp": "^0.34.1",
+    "zod": "^3.25.48"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/node": "^22.14.0",
     "@types/react": "^19.1.0",
     "eslint": "^8",

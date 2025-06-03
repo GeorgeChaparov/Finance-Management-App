@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { CreateUserRequest } from "@/src/types/Users";
-import { getUserByEmail, createUser} from "@/src/lib/user";
+import { getUserByEmail, createUser} from "@/src/lib/database/user";
+import bcrypt from 'bcrypt';
 
 export async function POST(request: NextRequest) {
   try {
@@ -16,15 +17,18 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (await getUserByEmail(email)) {
+    const userExists = await getUserByEmail(email);
+    if (userExists) {
       return NextResponse.json(
         { error: 'This email is already used' },
         { status: 400 }
       );
     }
 
-    const newUserId = await createUser(username, email, password)
+    const hashedPassword = await bcrypt.hash(password, 15);
+    const newUserId = await createUser(username, email, hashedPassword)
     if (!newUserId) {
+      console.error("No new id returned:", newUserId)
       return NextResponse.json(
         { error: 'Internal server error' },
         { status: 501 }

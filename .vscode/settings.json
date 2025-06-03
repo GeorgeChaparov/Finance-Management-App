@@ -1,0 +1,71 @@
+{
+    "hidefiles.configurationType": "local",
+    "hidefiles.globalConfig": {
+        "profiles": [
+            {
+                "name": "Default",
+                "detail": "",
+                "description": "Test",
+                "hidden": [
+                    ".vscode/"
+                ]
+            },
+            {
+                "name": "Strict",
+                "detail": "Hide everything not immediately required",
+                "hidden": [
+                    "$Default"
+                ]
+            },
+            {
+                "hidden": [
+                    "jsconfig.json",
+                    "next-env.d.ts",
+                    "auth.ts",
+                    "README.md",
+                    "tsconfig.json",
+                    "package.json",
+                    "package-lock.json",
+                    "next.config.mjs",
+                    "auth.config.ts",
+                    ".gitignore",
+                    ".gitattributes",
+                    ".eslintrc.json",
+                    ".env.local",
+                    "node_modules/",
+                    ".vscode/",
+                    ".next/",
+                    "tsconfig.json"
+                ],
+                "name": "Hide config files",
+                "description": "",
+                "detail": "",
+                "peek": []
+            }
+        ]
+    },
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "jsconfig.json": true,
+        "next-env.d.ts": true,
+        "auth.ts": true,
+        "README.md": true,
+        "tsconfig.json": true,
+        "package.json": true,
+        "package-lock.json": true,
+        "next.config.mjs": true,
+        "auth.config.ts": true,
+        ".gitignore": true,
+        ".gitattributes": true,
+        ".eslintrc.json": true,
+        ".env.local": true,
+        "node_modules/": true,
+        ".vscode/": true,
+        ".next/": true
+    },
+    "hidefiles.selectedProfile": "Hide config files"
+}

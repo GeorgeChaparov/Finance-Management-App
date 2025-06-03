@@ -7,14 +7,16 @@ import Input from "@/src/components/basic/input/Input";
 import { Transaction as TransactionClass } from "@/src/types/Transaction";
 import Transaction from "@/src/components/transaction/Transaction";
 import Menu from "@/src/components/menu/Menu";
-import { getUserById } from "@/src/lib/user";
+import { getUserById } from "@/src/lib/database/user";
+import { auth } from "@/auth";
 
 export default async function Home() {
   const currentMonth = new Date().getMonth();
   const transactions = transactionsArray;
 
-  const user: any = await getUserById(1);
 
+  const session = await auth();
+  const user: any = await getUserById(session?.user?.id);
   const formatter = new Intl.NumberFormat('en-US', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2

@@ -2,7 +2,7 @@
 import pool from "./db";
 import { DBUser, User} from "@/types/Users"
 
-export async function getUserById(id: number): Promise<DBUser | null> {
+export async function getUserById(id: string): Promise<DBUser | null> {
   try {
     const [rows]: any = await pool.query('SELECT * FROM user WHERE id = ?', [id]);
     return rows[0] as DBUser | null;
@@ -14,7 +14,7 @@ export async function getUserById(id: number): Promise<DBUser | null> {
 
 export async function getUserByEmail(email: string): Promise<DBUser | null> {
   try {
-    const [rows]: any = await pool.query('SELECT * FROM user WHERE id = ?', [email]);
+    const [rows]: any = await pool.query('SELECT * FROM user WHERE email = ?', [email]);
     return rows[0] as DBUser | null;
   } catch (error) {
     console.error("Database Error:", error);

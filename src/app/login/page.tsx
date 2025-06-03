@@ -6,6 +6,7 @@ import Input from "@/src/components/basic/input/Input";
 import Button from "@/src/components/basic/button/Button";
 
 export default function Page() {
+
   return (
     <div className={style.page}>
         <BackgroundCircles  
@@ -25,14 +26,15 @@ export default function Page() {
         ]}>
         </BackgroundCircles>
         <AnimatedFormBackground 
+        submitCallbackType="loginUser"
         transition={{delay: backgroundAnimation.delay, duration: backgroundAnimation.duration}}
         animationVariants={{
           init: {bottom: "-714px"}, animate: {top: "max(50% - 357px , calc(50% - ((100% - 100px) / 2))) "}
         }}
         className={style.backgroundBlur}>
           <p className={style.title}>Log In</p>
-          <Input className={style.email} type="text" placeholder="Email" attributes={{required: true, autoComplete: "true"}}/>
-          <Input className={style.password} type="password" placeholder="Password" attributes={{required: true, autoComplete: "true"}}/>
+          <Input className={style.email} type="email" placeholder="Email" attributes={{required: true, autoComplete: "true", name: "email"}}/>
+          <Input className={style.password} type="password" placeholder="Password" attributes={{required: true, autoComplete: "true", name: "password"}}/>
           <a className={style.forgotPassword} href="http://">Forgot password?</a>
           <Button className={style.submitButton} events={["click"]} callbacks={[]} type="submit">Log In</Button>
         </AnimatedFormBackground>
