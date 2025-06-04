@@ -16,21 +16,17 @@ export const { auth, signIn, signOut } = NextAuth({
         const { email, password } = parsedCredentials.data;
         const user = await getUserByEmail(email);
         if (!user){
-          console.log("cant find email.");
+          console.error("Can't find email.");
           return null;
         } 
-        const passwordsMatch = await bcrypt.compare(password, user.password);
-        if (passwordsMatch) {
-          console.log("user logged");
-          return user;  
-        } 
-        else console.log("password not mathing.");
-        
+
+        const passwordsMatch = await bcrypt.compare(password, user.password);  
+        if (passwordsMatch) return user;   
+        else console.error("Password not mathing.");
       }
       else {
-        console.error("parsing credentials unsuccessfull: ", parsedCredentials.error);
-        console.log(parsedCredentials.data);
-        
+        console.error("Parsing credentials unsuccessfull: ", parsedCredentials.error);
+        console.error(parsedCredentials.data);
       }
   
       return null;

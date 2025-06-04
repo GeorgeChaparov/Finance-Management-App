@@ -1,7 +1,27 @@
-import NextAuth from 'next-auth';
-import { authConfig } from '../auth.config';
+import { NextRequest, NextResponse } from 'next/server';
+import { publicPagesURL } from './utilities';
+import { getToken } from "next-auth/jwt";
 
-export default NextAuth(authConfig).auth;
+export async function middleware(req: NextRequest) {
+  const pathname = req.nextUrl.pathname;
+  const isPublic = publicPagesURL.includes(pathname);
+  const token = await getToken({ req, secret: process.env.AUTH_SECRET });
+  const isLoggedIn = !!token;
+
+  if (isLoggedIn && isPublic) {
+    const url = req.nextUrl.clone();
+    url.pathname = '/home';
+    return NextResponse.redirect(url);
+  }
+
+  if (!isLoggedIn && !isPublic) {
+    const url = req.nextUrl.clone();
+    url.pathname = '/login';
+    return NextResponse.redirect(url);
+  }
+
+  return NextResponse.next();
+}
 
 export const config = {
   // https://nextjs.org/docs/app/building-your-application/routing/middleware#matcher

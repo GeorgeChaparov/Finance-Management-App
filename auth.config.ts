@@ -1,7 +1,7 @@
 import type { NextAuthConfig } from 'next-auth';
+import { publicPagesURL } from './src/utilities';
 
 export const authConfig = {
-
   pages: {
     signIn: '/login',
     signOut: '/wellcome'
@@ -20,15 +20,26 @@ export const authConfig = {
     },
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
-      const isOnHome = nextUrl.pathname.startsWith('/home');
-      console.log(isOnHome);
-      
-      if (isOnHome) {
-        if (isLoggedIn) return true;
-        return false; 
+      const pathname = nextUrl.pathname;
+      let publicPage = false;
+
+      for (let i = 0; i < publicPagesURL.length; i++) {
+        if (pathname === publicPagesURL[i]) {
+          publicPage = true;
+          break;
+        }
       }
       
-      return true;
+      // Non-authenticated users can access public pages.
+      if (publicPage && !isLoggedIn) return true;
+
+      // Authenticated users can access protected pages.
+      if (!publicPage && isLoggedIn) return true;
+
+      console.log("aa");
+      
+      // Otherwise, block request and trigger redirect.
+      return false;
     },
   },
   providers: [],

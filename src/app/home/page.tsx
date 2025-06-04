@@ -9,14 +9,19 @@ import Transaction from "@/src/components/transaction/Transaction";
 import Menu from "@/src/components/menu/Menu";
 import { getUserById } from "@/src/lib/database/user";
 import { auth } from "@/auth";
+import { DBUser } from "@/src/types/Users";
+import { getToken } from "next-auth/jwt";
+import { cookies } from "next/headers";
+import { getUseIdFromCookie } from "@/src/lib/authActions";
 
 export default async function Home() {
   const currentMonth = new Date().getMonth();
   const transactions = transactionsArray;
 
 
-  const session = await auth();
-  const user: any = await getUserById(session?.user?.id);
+  const id = await getUseIdFromCookie();
+  const user: DBUser | null = await getUserById(id);
+  
   const formatter = new Intl.NumberFormat('en-US', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2

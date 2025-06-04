@@ -22,10 +22,13 @@ const toggleElementScroll = (element: HTMLElement) =>{
 
 const backgroundAnimation = {duration: 0.4, delay: 0.35}
 
+const publicPagesURL = ["/", "/login", "/signup"];
+
 export {
     weekDays,
     Months,
     transactionsArray,
     toggleElementScroll,
-    backgroundAnimation
+    backgroundAnimation,
+    publicPagesURL
 };

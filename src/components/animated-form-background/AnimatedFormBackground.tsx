@@ -11,22 +11,19 @@ type animatedFormBackgroundProps = {children: ReactNode, className: string, anim
 
 let callbackUrl: null | string = null;
 let router: AppRouterInstance;
+
 async function validateCreateInputs(e: FormEvent<HTMLFormElement>) {
   e.preventDefault();
 
-  let form = e.target as HTMLFormElement;
-  const formData = new FormData(form);
-
-  signin(formData);
+  const form = e.target as HTMLFormElement;
+  signin(new FormData(form));
 }
 
 async function validateLoginInputs(e: FormEvent<HTMLFormElement>) {
   e.preventDefault();
 
-  let form = e.target as HTMLFormElement;
-  const formData = new FormData(form);
-
-  authenticate(formData);
+  const form = e.target as HTMLFormElement;
+  authenticate(new FormData(form));
 }
 
 export default function AnimatedFormBackground({children, className, animationVariants, transition, submitCallbackType} : animatedFormBackgroundProps) {
@@ -41,7 +38,6 @@ export default function AnimatedFormBackground({children, className, animationVa
     variants={animationVariants}
     className={className}
     onSubmit={submitCallbackType == 'createUser' ? validateCreateInputs : validateLoginInputs}
-    method="POST"
     >
       {children}
     </motion.form>

@@ -35,7 +35,9 @@
                     "node_modules/",
                     ".vscode/",
                     ".next/",
-                    "tsconfig.json"
+                    "tsconfig.json",
+                    "src/app/globals.css",
+                    "src/app/page.module.css"
                 ],
                 "name": "Hide config files",
                 "description": "",
@@ -49,23 +51,7 @@
         "**/.svn": true,
         "**/.hg": true,
         "**/CVS": true,
-        "**/.DS_Store": true,
-        "jsconfig.json": true,
-        "next-env.d.ts": true,
-        "auth.ts": true,
-        "README.md": true,
-        "tsconfig.json": true,
-        "package.json": true,
-        "package-lock.json": true,
-        "next.config.mjs": true,
-        "auth.config.ts": true,
-        ".gitignore": true,
-        ".gitattributes": true,
-        ".eslintrc.json": true,
-        ".env.local": true,
-        "node_modules/": true,
-        ".vscode/": true,
-        ".next/": true
+        "**/.DS_Store": true
     },
-    "hidefiles.selectedProfile": "Hide config files"
+    "hidefiles.selectedProfile": "Show All Files"
 }
