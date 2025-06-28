@@ -1,4 +1,4 @@
-import { weekDays } from "@/src/utilities";
+import { weekDays } from "@/src/consts";
 import Loading from "../loading/Loading";
 import Menu from "../menu/Menu";
 import Transaction from "../transaction/Transaction";

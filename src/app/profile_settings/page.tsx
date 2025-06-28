@@ -1,11 +1,11 @@
 import style from "./page.module.css";
 import Image from "next/image";
-import starIcon from "@/public/category_icons/star_icon.png"
+import starIcon from "@/public/category_icons/0_star_icon.png"
 import { redirect } from "next/navigation";
 import Switch from "@/src/components/basic/switch/Switch";
 import Button from "@/src/components/basic/button/Button";
 import Menu from "@/src/components/menu/Menu";
-import { logOut } from "@/src/lib/authActions";
+import { logOutAction } from "@/src/lib/actions/authActions";
 
 export default function Page() {
 
@@ -31,7 +31,7 @@ export default function Page() {
       <section className={style.accountSection}>
         <p className={style.email}>Email <span>email@gmail.con</span></p>
         <p className={style.username}>Username <span>username123</span></p>
-        <Button events={["click"]} callbacks={[logOut]} className={style.logout}>Log out</Button>
+        <Button events={["click"]} callbacks={[logOutAction]} className={style.logout}>Log out</Button>
       </section>
 
       <div className={style.buttonsWrapper}>

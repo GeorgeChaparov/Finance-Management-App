@@ -1,4 +1,4 @@
-import { Months, transactionsArray } from "@/src/utilities";
+import { Months, transactionsArray } from "@/src/consts";
 import style from "./page.module.css";
 import { Transaction } from "@/src/types/Transaction";
 import TransactionByDay from "@/src/components/transactions-by-day/TransactionByDay";

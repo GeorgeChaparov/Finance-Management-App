@@ -1,10 +1,13 @@
+"use server"
+
 import style from "./page.module.css";
 import DateSelectPanelAndButton from "./SpecificComponents/DateSelectPanelAndButton/DateSelectPanelAndButton";
 import CustomChart from "./SpecificComponents/CustomChart/CustomChart";
-import { Months, transactionsArray } from "@/src/utilities";
+import { Months, transactionsArray } from "@/src/consts";
 import { Transaction } from "@/src/types/Transaction";
 import BackgroundCircles from "@/src/components/background-circles/BackgroundCircles";
 import TransactionByDay from "@/src/components/transactions-by-day/TransactionByDay";
+
 export default async function Transactions({params}: {params:any}) {
   type MonthsStrings = keyof typeof Months;
   const { month } = await params;
@@ -19,7 +22,7 @@ export default async function Transactions({params}: {params:any}) {
   let positiveAmount = 0;
   let negativeAmount = 0;
 
-  const expensesByCategory = GetExpensesByCategory(transactions)
+  const expensesByCategory = getExpensesByCategory(transactions)
   
   const finalExpenses = expensesByCategory.slice(0, 4);
 
@@ -85,7 +88,7 @@ export default async function Transactions({params}: {params:any}) {
     return transactionsByDay;
   }
 
-  function GetExpensesByCategory(transactions: Transaction[]) {
+  function getExpensesByCategory(transactions: Transaction[]) {
     const expenseByCategory = new Map();
 
     for (let i = 0; i < transactions.length; i++) {

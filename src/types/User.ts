@@ -11,14 +11,13 @@ export interface User {
     cashAmount: number
 }
 
-export interface CreateUserRequest {
-    username: string,
-    email: string,
-    password: string,
+export interface UserRequest {
+    id?: string
+    email?: string,
 }
 
 // Database specific interfaces
 export interface DBUser extends User{
-    id: number;
+    id: string;
 }
 

@@ -2,7 +2,7 @@
 
 import style from "./BackgroundCircles.module.css"
 import circleImage from "@/public/circle.png"
-import { backgroundAnimation } from "@/src/utilities";
+import { backgroundAnimation } from "@/src/consts";
 import { motion, Variants } from "framer-motion";
 import Image from "next/image";
 

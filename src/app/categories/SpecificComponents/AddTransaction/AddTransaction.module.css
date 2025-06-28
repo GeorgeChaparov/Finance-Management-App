@@ -17,6 +17,30 @@
     z-index: 1000;
 }
 
+.icon {
+    width: fit-content;
+    height: fit-content;
+}
+
+.icon > input + label{
+    position: absolute;
+    width: 23px;
+    height: 23px;
+
+    background-color: transparent;
+
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.icon > input:checked + label {
+    background-color: red;
+    cursor: default;
+}
+
 .title {
     width: calc(100% - 10px);
     height: 60px;

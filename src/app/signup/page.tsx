@@ -1,6 +1,8 @@
+"use server"
+
 import BackgroundCircles from "@/src/components/background-circles/BackgroundCircles";
 import style from "./page.module.css"
-import { backgroundAnimation } from "@/src/utilities";
+import { backgroundAnimation } from "@/src/consts";
 import AnimatedFormBackground from "@/src/components/animated-form-background/AnimatedFormBackground";
 import Input from "@/src/components/basic/input/Input";
 import Button from "@/src/components/basic/button/Button";

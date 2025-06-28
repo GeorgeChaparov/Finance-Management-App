@@ -2,7 +2,6 @@
 
 import { AnimationControls, motion, TargetAndTransition, VariantLabels, Variants } from "framer-motion";
 import { MouseEventHandler } from "react";
-import addIcon from "@/public/add.png"
 
 type DummyAddTransactionButtonProps = {actionCallback: MouseEventHandler<HTMLButtonElement>, variants: Variants, controls: boolean | TargetAndTransition | VariantLabels | AnimationControls, style: object, text?: string}
 
@@ -16,7 +15,7 @@ function DummyAddTransactionButton({actionCallback, variants, controls, style, t
         height: "50px",
 
         backgroundColor: "rgb(194, 194, 194)",
-        backgroundImage: "url(/add.png)",
+        backgroundImage: "url(/add_black.png)",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
 

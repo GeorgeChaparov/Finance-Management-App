@@ -2,7 +2,7 @@ import NextAuth from 'next-auth';
 import { authConfig } from './auth.config';
 import Credentials from 'next-auth/providers/credentials';
 import { z } from 'zod';
-import { getUserByEmail } from './src/lib/database/user';
+import { getUser } from './src/lib/database/user';
 import bcrypt from 'bcrypt';
 
 export const { auth, signIn, signOut } = NextAuth({
@@ -14,7 +14,7 @@ export const { auth, signIn, signOut } = NextAuth({
         .safeParse(credentials);
       if (parsedCredentials.success) {
         const { email, password } = parsedCredentials.data;
-        const user = await getUserByEmail(email);
+        const user = await getUser({email});
         if (!user){
           console.error("Can't find email.");
           return null;

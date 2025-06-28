@@ -1,5 +1,5 @@
 import type { NextAuthConfig } from 'next-auth';
-import { publicPagesURL } from './src/utilities';
+import { publicPagesURL } from './src/consts';
 
 export const authConfig = {
   pages: {

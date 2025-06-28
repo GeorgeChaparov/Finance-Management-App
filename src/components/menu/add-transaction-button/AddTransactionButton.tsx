@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import style from "./AddTransactionButton.module.css"
 import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence, useAnimationControls } from "framer-motion";
-import { toggleElementScroll } from "@/src/utilities";
+import { toggleElementScroll } from "@/src/consts";
 import Button from "../../basic/button/Button";
 
 type AddTransactionButtonProps = {hide: boolean}

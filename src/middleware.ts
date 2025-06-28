@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { publicPagesURL } from './utilities';
+import { publicPagesURL } from './consts';
 import { getToken } from "next-auth/jwt";
 
 export async function middleware(req: NextRequest) {

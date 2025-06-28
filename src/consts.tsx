@@ -24,11 +24,14 @@ const backgroundAnimation = {duration: 0.4, delay: 0.35}
 
 const publicPagesURL = ["/", "/login", "/signup"];
 
+const categoryIconsPath = "/category_icons/";
+
 export {
     weekDays,
     Months,
     transactionsArray,
     toggleElementScroll,
     backgroundAnimation,
-    publicPagesURL
+    publicPagesURL,
+    categoryIconsPath,
 };

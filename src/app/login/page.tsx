@@ -1,11 +1,14 @@
+"use server"
+
 import BackgroundCircles from "@/src/components/background-circles/BackgroundCircles";
 import style from "./page.module.css"
-import { backgroundAnimation } from "@/src/utilities";
+import { backgroundAnimation } from "@/src/consts";
 import AnimatedFormBackground from "@/src/components/animated-form-background/AnimatedFormBackground";
 import Input from "@/src/components/basic/input/Input";
 import Button from "@/src/components/basic/button/Button";
+import Link from "next/link";
 
-export default function Page() {
+export default async function Page() {
 
   return (
     <div className={style.page}>
@@ -35,8 +38,8 @@ export default function Page() {
           <p className={style.title}>Log In</p>
           <Input className={style.email} type="email" placeholder="Email" attributes={{required: true, autoComplete: "true", name: "email"}}/>
           <Input className={style.password} type="password" placeholder="Password" attributes={{required: true, autoComplete: "true", name: "password"}}/>
-          <a className={style.forgotPassword} href="http://">Forgot password?</a>
-          <Button className={style.submitButton} events={["click"]} callbacks={[]} type="submit">Log In</Button>
+          <Link className={style.forgotPassword} href="#">Forgot password?</Link>
+          <Button className={style.submitButton} type="submit">Log In</Button>
         </AnimatedFormBackground>
     </div>
   );

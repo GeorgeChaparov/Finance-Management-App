@@ -1,9 +1,12 @@
+"use server"
+
+import Link from "next/link";
 import AnimatedFormBackground from "../components/animated-form-background/AnimatedFormBackground";
 import BackgroundCircles from "../components/background-circles/BackgroundCircles";
 import style from "./page.module.css"
-import { backgroundAnimation } from "@/src/utilities";
+import { backgroundAnimation } from "@/src/consts";
 
-export default function Page() {
+export default async function Page() {
   return (
     <div className={style.page}>
         <BackgroundCircles  
@@ -30,8 +33,8 @@ export default function Page() {
         className={style.backgroundBlur}>
           <h1 className={style.title}>Welcome</h1>
           <div className={style.wrapper}>            
-            <a className={style.signIn} href="/signup" >Sign Up</a>
-            <a className={style.logIn} href="/login">Have an account? <br />Log in here</a>
+            <Link className={style.signIn} href="/signup" >Sign Up</Link>
+            <Link className={style.logIn} href="/login">Have an account? <br />Log in here</Link>
           </div>
         </AnimatedFormBackground>
     </div>

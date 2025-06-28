@@ -4,7 +4,7 @@ import style from "./page.module.css";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useParams, useRouter} from "next/navigation";
 import { motion, useAnimationControls } from "framer-motion";
-import { Months, toggleElementScroll } from "@/src/utilities";
+import { Months, toggleElementScroll } from "@/src/consts";
 import BackgroundCircles from "@/src/components/background-circles/BackgroundCircles";
 import Calculator from "@/src/components/calculator/Calculator";
 import DummyAddTransactionButton from "@/src/components/dummy-add-transaction-button/DummyAddTransactionButton";
@@ -135,7 +135,7 @@ export default function AddTransaction() {
       height="100vh">
       </BackgroundCircles> 
 
-      <div className={style.page}>
+      <form className={style.page}>
         {openCalculator && (<Calculator resultCallback={handleCalculatorResult} closeCallback={handleCloseCalculator} />)}
 
         <section className={style.contentWrapperOne}>
@@ -238,7 +238,7 @@ export default function AddTransaction() {
         </section>
           
         <Menu hide={true}/>
-      </div>
+      </form>
     </>
   );
 }

@@ -2,14 +2,18 @@
 
 import { signIn, signOut } from '@/auth';
 import { AuthError } from 'next-auth';
-import { createUser, getUserByEmail } from './database/user';
+import { createUser, getUser } from '../database/user';
 import bcrypt from 'bcrypt';
 import { redirect } from 'next/navigation';
-import { userSchema } from '../schemas/userSchemas';
+import { userSchema } from '../../schemas/userSchemas';
 import { getToken } from 'next-auth/jwt';
 import { cookies } from 'next/headers';
+import { AppError } from '../errors/serverError';
+import { errorLogger } from '../loggers/errorLogger';
+import { HttpStatus } from '@/src/enums';
+import { ServerResponse } from '@/src/types/ServerRespons';
 
-export async function authenticate(formData: FormData) {
+export async function authenticateAction(formData: FormData) {
   try {
     await signIn('credentials', {
       email: formData.get('email'),
@@ -30,55 +34,48 @@ export async function authenticate(formData: FormData) {
   }
 }
 
-export async function logOut() {
+export async function logOutAction() {
   try {
-    await signOut({ redirect: false }); //There is some kind of problem whit the build in redirectTo prop. That's why I am handling it this way.
+    await signOut({ redirect: false }); //There is some kind of problem with the build in redirectTo prop. That's why I am handling it this way.
   } catch (error) {
-    console.error('Error during signout:', error);
+    return errorLogger.log(`Error during signout: ${error}`);
   } finally {
     redirect('/');
   }
 }
 
-export async function signin(formData: FormData) {
+export async function signinAction(formData: FormData): Promise<ServerResponse> {
   const username = formData.get("username") as string;
   const password = formData.get("password") as string;
   const email = formData.get("email") as string;
 
   try {
-    if (!username || !email || !password) 
-    return { error: 'Name and email are required' , status: 400 };
+    if (!username || !email || !password) throw new AppError('Name, email and password are required', HttpStatus.BadRequest_400);
 
     const parsedCredentials = userSchema.safeParse({username, password, email});
 
     if (parsedCredentials.success) {
       const { email, password } = parsedCredentials.data;
       
-      const userExists = await getUserByEmail(email);
-      if (userExists) 
-      return { error: 'This email is already used' , status: 400};
+      const userExists = await getUser({ email });
+      if (userExists) throw new AppError('This email is already used', HttpStatus.BadRequest_400);
 
       const hashedPassword = await bcrypt.hash(password, 15);
       const newUserId = await createUser(username, email, hashedPassword)
 
-      if (!newUserId) {
-        console.error("No new id returned. Id = ", newUserId)
-        return { error: 'Internal server error', status: 501 };
-      }
+      if (!newUserId) throw new AppError(`No new id returned. Id = ${newUserId}`, HttpStatus.InternalServerError_500)
     
       console.log('Creating user:', { id: newUserId, username, password, email });
-      return {id: newUserId, status: 201 }; 
+      return {successful: true, data: {id: newUserId}, statusCode: HttpStatus.Created_201 }; 
     }
-    else {
-      console.error("Parsing credentials unsuccessfull: ", parsedCredentials.error);
-      console.error(parsedCredentials.data);
-    }
+
+    throw new AppError(`Parsing credentials unsuccessfull: ${parsedCredentials.error}`, HttpStatus.UnprocessableEntity_422);
   } catch (error) {
-    return { error: 'Internal server error', status: 500 };
+    return errorLogger.log(error);
   }
 }
 
-export async function getUseIdFromCookie() {
+export async function getUserIdFromCookieAction() {
   const cookieStore = await cookies();
   const token = await getToken({
     req: {

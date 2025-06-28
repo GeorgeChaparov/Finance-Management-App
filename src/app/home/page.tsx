@@ -1,27 +1,29 @@
+"use server"
+
 import style from "./page.module.css";
 import Image from "next/image";
 import searchIcon from "@/public/search.png"
-import { Months, transactionsArray } from "@/src/utilities";
+import { Months, transactionsArray } from "@/src/consts";
 import BackgroundCircles from "@/src/components/background-circles/BackgroundCircles";
 import Input from "@/src/components/basic/input/Input";
 import { Transaction as TransactionClass } from "@/src/types/Transaction";
 import Transaction from "@/src/components/transaction/Transaction";
 import Menu from "@/src/components/menu/Menu";
-import { getUserById } from "@/src/lib/database/user";
-import { auth } from "@/auth";
-import { DBUser } from "@/src/types/Users";
-import { getToken } from "next-auth/jwt";
-import { cookies } from "next/headers";
-import { getUseIdFromCookie } from "@/src/lib/authActions";
+import { User } from "@/src/types/User";
+import Link from "next/link";
+import { getUserAction } from "@/src/lib/actions/userActions";
+import { getUserIdFromCookieAction } from "@/src/lib/actions/authActions";
+import { ServerResponse } from "@/src/types/ServerRespons";
 
 export default async function Home() {
   const currentMonth = new Date().getMonth();
   const transactions = transactionsArray;
 
 
-  const id = await getUseIdFromCookie();
-  const user: DBUser | null = await getUserById(id);
-  
+  const id = await getUserIdFromCookieAction();
+  const response: ServerResponse = await getUserAction({id: id});
+  const user = response.data != null ? response.data.user as User : null;
+
   const formatter = new Intl.NumberFormat('en-US', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2
@@ -75,7 +77,7 @@ export default async function Home() {
             <div className={style.transactionSection}>
               <div className={style.titleAndButtonWrapper}>
                 Transactions 
-                <a href={`/transactions/${Months[currentMonth]}`} className={style.seeAll}>See all</a>
+                <Link href={`/transactions/${Months[currentMonth]}`} className={style.seeAll}>See all</Link>
               </div>
 
               <section className={style.searchBarWrapper}>

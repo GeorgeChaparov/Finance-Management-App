@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "generate:file-list": "ts-node scripts/generate-file-list.ts",
     "dev": "set NODE_OPTIONS=--inspect && next dev --turbopack",
     "build": "next build",
     "start": "next start",
@@ -13,6 +14,7 @@
     "bcrypt": "^6.0.0",
     "chart.js": "^4.4.4",
     "framer-motion": "^12.5.0",
+    "fs": "^0.0.1-security",
     "mysql2": "^3.14.1",
     "next": "^15.2.3",
     "next-auth": "^5.0.0-beta.27",
@@ -26,6 +28,7 @@
     "@types/bcrypt": "^5.0.2",
     "@types/node": "^22.14.0",
     "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.6",
     "eslint": "^8",
     "eslint-config-next": "14.2.13",
     "prisma": "^6.5.0",

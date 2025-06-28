@@ -2,7 +2,7 @@
 
 import { motion, Transition, Variants } from "framer-motion";
 import { FormEvent, ReactNode, use } from "react";
-import { authenticate, signin } from "@/src/lib/authActions";
+import { authenticateAction, signinAction } from "@/src/lib/actions/authActions";
 import {useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
@@ -16,14 +16,14 @@ async function validateCreateInputs(e: FormEvent<HTMLFormElement>) {
   e.preventDefault();
 
   const form = e.target as HTMLFormElement;
-  signin(new FormData(form));
+  signinAction(new FormData(form));
 }
 
 async function validateLoginInputs(e: FormEvent<HTMLFormElement>) {
   e.preventDefault();
 
   const form = e.target as HTMLFormElement;
-  authenticate(new FormData(form));
+  authenticateAction(new FormData(form));
 }
 
 export default function AnimatedFormBackground({children, className, animationVariants, transition, submitCallbackType} : animatedFormBackgroundProps) {
