@@ -64,7 +64,7 @@ function AddTransactionButton({hide}: AddTransactionButtonProps) {
                             animate={{translate: "0px 0px"}}
                             exit={{translate: "102px 104px"}}
                             className={style.expenseOption}> 
-                                <Button events={["click"]} callbacks={[loadExpense]} className={style.expenseButton}></Button>
+                                <Button attributes={{onClick: loadExpense, className: style.expenseButton}}></Button>
                                 <motion.p 
                                 initial={optionsTextVariants.init} 
                                 animate={optionsTextVariants.animate}
@@ -79,7 +79,7 @@ function AddTransactionButton({hide}: AddTransactionButtonProps) {
                             exit={{translateY: "155px"}}
                             className={style.scanAndCloseOptions}>
                                 <div className={style.scanOptions}> 
-                                    <Button events={["click"]} callbacks={[loadScan]} className={style.scanButton}></Button>
+                                    <Button attributes={{onClick: loadScan, className: style.scanButton}}></Button>
                                     <motion.p
                                     initial={optionsTextVariants.init} 
                                     animate={optionsTextVariants.animate}
@@ -94,7 +94,7 @@ function AddTransactionButton({hide}: AddTransactionButtonProps) {
                             animate={{translate: "0px 0px"}}
                             exit={{translate: "-102px 104px"}}
                             className={style.incomeOptions}> 
-                                <Button events={["click"]} callbacks={[loadIncome]} className={style.incomeButton}></Button>
+                                <Button attributes={{onClick: loadIncome, className: style.incomeButton}}></Button>
                                 <motion.p
                                 initial={optionsTextVariants.init} 
                                 animate={optionsTextVariants.animate}

@@ -1,7 +1,7 @@
 "use server"
 
 import style from "./page.module.css";
-import DateSelectPanelAndButton from "./SpecificComponents/DateSelectPanelAndButton/DateSelectPanelAndButton";
+import DateSelectPanel from "./SpecificComponents/DateSelectPanel/DateSelectPanel";
 import CustomChart from "./SpecificComponents/CustomChart/CustomChart";
 import { Months, transactionsArray } from "@/src/consts";
 import { Transaction } from "@/src/types/Transaction";
@@ -143,7 +143,7 @@ export default async function Transactions({params}: {params:any}) {
       <div className = {style.titleAnaDateWrapper}>
         <p className = {style.title}>Transactions</p>
 
-        <DateSelectPanelAndButton text={date}/>
+        <DateSelectPanel text={date}/>
       </div>
 
       <section className={style.statisticsContainer + " " + style.backgroundBlur}>

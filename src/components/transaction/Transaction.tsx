@@ -15,7 +15,7 @@ function Transaction({transaction, isOnHomePage = false}: PopupPanelProps) {
     const dateOrTime = isOnHomePage ? transaction.date : transaction.time;
 
     return(
-        <Button events={["click"]} callbacks={[async () => {"use server"; redirect(`/transaction/${transaction.id}`)}]} className={style.background}>
+        <Button attributes={{onClick: async () => {"use server"; redirect(`/transaction/${transaction.id}`)}, className: style.background}}>
             <Image className={style.logo} src={transaction.logo} alt="logo" width="40" height="40"/>
             <div className={style.nameAndCategoryWrapper}>
                 <p className={style.name}>{transaction.name}</p>

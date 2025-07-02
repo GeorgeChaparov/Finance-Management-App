@@ -29,7 +29,7 @@ export default function CategoryElement({category, deleteCallback} : {category: 
             {category.name}
         </Button>
         
-        <Button className={style.deleteButton} type="submit">
+        <Button attributes={{className: style.deleteButton, type: "submit"}} >
             <Image src={trashIcon} alt={""}></Image>
         </Button>
     </form>

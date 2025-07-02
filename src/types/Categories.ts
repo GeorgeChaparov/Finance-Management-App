@@ -4,11 +4,16 @@ export interface Category {
     userId: string,
 }
 
-export interface CategoryRequest {
+export interface CategoriesRequest {
     userId: string
 }
 
-export interface CategoryResponse {
+export interface CategoryRequest {
+    userId: string,
+    categoryId: string
+}
+
+export interface GetCategoryResponse {
     name: string,
     iconName: string,
 }

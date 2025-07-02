@@ -2,7 +2,7 @@ import { Months, transactionsArray } from "@/src/consts";
 import style from "./page.module.css";
 import { Transaction } from "@/src/types/Transaction";
 import TransactionByDay from "@/src/components/transactions-by-day/TransactionByDay";
-import DateSelectPanelAndButton from "@/src/app/transactions/[month]/SpecificComponents/DateSelectPanelAndButton/DateSelectPanelAndButton";
+import DateSelectPanel from "@/src/app/transactions/[month]/SpecificComponents/DateSelectPanel/DateSelectPanel";
 import BackgroundCircles from "@/src/components/background-circles/BackgroundCircles";
 
 export default async function Category({params}: {params:any}) {
@@ -102,7 +102,7 @@ export default async function Category({params}: {params:any}) {
       <div className = {style.titleAnaDateWrapper}>
         <p className = {style.categoryTitle}>Transactions</p>
 
-        <DateSelectPanelAndButton text={date}/>
+        <DateSelectPanel text={date}/>
       </div>
 
       <div className={style.expensesWrapper}>

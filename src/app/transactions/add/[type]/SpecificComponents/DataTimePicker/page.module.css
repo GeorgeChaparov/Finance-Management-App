@@ -1,0 +1,30 @@
+.dateTimePicker{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    margin-bottom: 15px;
+    margin-top: 18px;
+}
+
+.datePicker, .timePicker {
+
+    color: rgb(212, 212, 212);  
+    position: absolute; 
+}
+
+.timePickerContainer {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.picker {
+    width: 100%;
+    height: 100%;
+
+    border-radius: 0;
+    margin: 0;
+    padding: 0;
+
+    opacity: 0;
+}

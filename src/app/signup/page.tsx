@@ -33,10 +33,10 @@ export default function Page() {
         className={style.backgroundBlur}
         submitCallbackType={"createUser"}>
           <p className={style.title}>Sign Up</p>
-          <Input className={style.email} type="email" placeholder="Email" attributes={{required: true, name: "email"}}/>
-          <Input className={style.username} type="text" placeholder="Username" attributes={{required: true, name: "username"}}/>
-          <Input className={style.password} type="password" placeholder="Password" attributes={{required: true, name: "password"}}/>
-          <Button className={style.submitButton} type="submit">Sign Up</Button>
+          <Input attributes={{className: style.email, type: "email", placeholder: "Email", name: "email", required: true}}></Input>
+          <Input attributes={{className: style.username, type: "text", placeholder: "Username", name: "username", required: true}}></Input>
+          <Input attributes={{className: style.password, type: "password", placeholder: "Password", name: "password", required: true}}></Input>
+          <Button attributes={{className: style.submitButton, type: "submit"}}>Sign Up</Button>
         </AnimatedFormBackground>
     </div>
   );

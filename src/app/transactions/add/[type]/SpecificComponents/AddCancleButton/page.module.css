@@ -1,0 +1,20 @@
+.contentWrapperThree{
+    width: 100%;  
+    height: 50px;
+    
+    margin-top: 30px;
+    margin-bottom: 5px;
+    
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.addButton {
+    width: 50px;
+    height: 50px;
+
+    border-radius: 50px;
+    border-style: none;
+}

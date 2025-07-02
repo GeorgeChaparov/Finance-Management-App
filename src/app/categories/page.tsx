@@ -9,7 +9,7 @@ import AddTransaction from "./SpecificComponents/AddTransaction/AddTransaction"
 import Button from "@/src/components/basic/button/Button"
 import CategoryElement from "@/src/components/category-element/CategoryElement"
 import Menu from "@/src/components/menu/Menu"
-import { CategoryResponse, DBCategory } from "@/src/types/Categories"
+import { GetCategoryResponse, DBCategory } from "@/src/types/Categories"
 
 export default function Categories() {
     const [shouldShowAddForm, setShouldShowAddForm] = useState(false);
@@ -19,7 +19,7 @@ export default function Categories() {
         const fetchData = async () => {
             try {
                 const res = await fetch('/api/category', {method: "GET"});
-                const categoires: CategoryResponse[] = await res.json();
+                const categoires: GetCategoryResponse[] = await res.json();
                 setCategories(categoires); 
             } catch (error) {
                 console.error('Failed to fetch:', error);
@@ -38,7 +38,7 @@ export default function Categories() {
     }
 
     function addCategory (data: any) {
-        const newCategory: CategoryResponse = data as CategoryResponse;
+        const newCategory: GetCategoryResponse = data as GetCategoryResponse;
         setCategories((prev:any) => [...prev, newCategory]);
     }
 
@@ -48,7 +48,7 @@ export default function Categories() {
         <section className={style.page}> 
             <section className={style.titleAndNavigationWrapper}>
                 Categories
-                <Button className={style.addCategoryButton} events={["click"]} callbacks={[showAddForm]} >
+                <Button attributes={{className: style.addCategoryButton, onClick: showAddForm}}>
                     <Image src={addIcon} alt=""></Image>
                 </Button>
             </section>

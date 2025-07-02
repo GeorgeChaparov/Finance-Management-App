@@ -1,6 +1,6 @@
 import { HttpStatus } from "@/src/enums";
 import { getUserIdFromCookieAction } from "@/src/lib/actions/authActions";
-import { getAllCategoryOfUser } from "@/src/lib/database/category";
+import { getAllCategoriesOfUser } from "@/src/lib/database/category";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
 export async function GET(request: NextRequest) {
   try {
     const userId = await getUserIdFromCookieAction();
-    const categories = await getAllCategoryOfUser({ userId });
+    const categories = await getAllCategoriesOfUser({ userId });
 
     return new Response(JSON.stringify(categories));
   } catch (error) {

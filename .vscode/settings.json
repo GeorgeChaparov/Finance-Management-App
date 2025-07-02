@@ -51,7 +51,25 @@
         "**/.svn": true,
         "**/.hg": true,
         "**/CVS": true,
-        "**/.DS_Store": true
+        "**/.DS_Store": true,
+        "jsconfig.json": true,
+        "next-env.d.ts": true,
+        "auth.ts": true,
+        "README.md": true,
+        "tsconfig.json": true,
+        "package.json": true,
+        "package-lock.json": true,
+        "next.config.mjs": true,
+        "auth.config.ts": true,
+        ".gitignore": true,
+        ".gitattributes": true,
+        ".eslintrc.json": true,
+        ".env.local": true,
+        "node_modules/": true,
+        ".vscode/": true,
+        ".next/": true,
+        "src/app/globals.css": true,
+        "src/app/page.module.css": true
     },
-    "hidefiles.selectedProfile": "Show All Files"
+    "hidefiles.selectedProfile": "Hide config files"
 }

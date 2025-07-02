@@ -81,7 +81,7 @@ export default async function Home() {
               </div>
 
               <section className={style.searchBarWrapper}>
-                  <Input placeholder="Search transaction" type="search" className={style.searchBar}></Input>
+                  <Input attributes={{placeholder: "Search transaction", type: "search", className: style.searchBar}}></Input>
                   <Image className={style.searchIcon} src={searchIcon} alt="settings image"></Image>
               </section> 
               {transactions.map((transaction: TransactionClass) => {

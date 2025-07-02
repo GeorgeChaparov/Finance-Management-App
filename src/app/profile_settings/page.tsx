@@ -31,16 +31,16 @@ export default function Page() {
       <section className={style.accountSection}>
         <p className={style.email}>Email <span>email@gmail.con</span></p>
         <p className={style.username}>Username <span>username123</span></p>
-        <Button events={["click"]} callbacks={[logOutAction]} className={style.logout}>Log out</Button>
+        <Button attributes={{onClick: logOutAction, className: style.logout}}>Log out</Button>
       </section>
 
       <div className={style.buttonsWrapper}>
-        <Button className={style.categories} callbacks={[loadCategories]} events={["click"]}>
+        <Button attributes={{ className: style.categories, onClick: loadCategories}}>
           <Image src={starIcon} alt={"star icon"}></Image>
           Categories
         </Button>
 
-        <Button className={style.subscriptions} callbacks={[loadSubscriptions]} events={["click"]}>
+        <Button attributes={{className: style.subscriptions, onClick: loadSubscriptions}}>
           <Image src={starIcon} alt={"star icon"}></Image>
           Subscriptions
         </Button>

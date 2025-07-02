@@ -43,7 +43,7 @@ export default function AddTransaction({closeCallback, addCallback}:{closeCallba
 
   return (
     <form className={style.addTransaction} action={handleSubmit}>
-      <Input className={style.title} type={"text"} attributes={{name:"name"}} placeholder={"New Category"}></Input>
+      <Input attributes={{name:"name", required: true, className: style.title, placeholder: "New Category", type: "text"}}></Input>
       {files.map((file, index) => {        
         if (index === 0) {
           return (

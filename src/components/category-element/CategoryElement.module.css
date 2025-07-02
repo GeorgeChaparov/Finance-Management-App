@@ -1,5 +1,6 @@
 .category {
     width: calc(100% - 28px);
+    min-height: 27px;
     height: fit-content;
 
     padding: 12px 14px;
@@ -17,11 +18,14 @@
 }
 
 .category > button:first-of-type {
+    width: calc(100% - 40px);
+
     display: flex;
     flex-direction: row;
     align-items: center;
 
     margin-right: 12px;
+    overflow-wrap: anywhere;
 
     color: white;
     font-size: 20px;

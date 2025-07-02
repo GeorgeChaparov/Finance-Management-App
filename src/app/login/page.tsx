@@ -36,10 +36,10 @@ export default async function Page() {
         }}
         className={style.backgroundBlur}>
           <p className={style.title}>Log In</p>
-          <Input className={style.email} type="email" placeholder="Email" attributes={{required: true, autoComplete: "true", name: "email"}}/>
-          <Input className={style.password} type="password" placeholder="Password" attributes={{required: true, autoComplete: "true", name: "password"}}/>
+          <Input attributes={{required: true, autoComplete: "true", name: "email", className: style.email, type: "email", placeholder: "Email"}}/>
+          <Input attributes={{required: true, autoComplete: "true", name: "password", className: style.password, type: "password", placeholder: "Password"}}/>
           <Link className={style.forgotPassword} href="#">Forgot password?</Link>
-          <Button className={style.submitButton} type="submit">Log In</Button>
+          <Button attributes={{className: style.submitButton, type: "submit"}}>Log In</Button>
         </AnimatedFormBackground>
     </div>
   );

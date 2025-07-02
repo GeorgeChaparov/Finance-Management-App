@@ -4,16 +4,23 @@ import { ReactNode, RefObject, useEffect, useRef, useState } from "react";
 import style from "./Calculator.module.css"
 import { motion, useAnimationControls } from "framer-motion"
 
-type calculatorProps = {content?: ReactNode, resultCallback: Function, closeCallback: Function, title?: string}
-function Calculator({content , resultCallback, closeCallback, title}: calculatorProps) {
+type calculatorProps = {content?: ReactNode, title?: string}
+function Calculator({content, title}: calculatorProps) {
     const buttonsSymbols = ['c', '(', ')', '/', '7', '8', '9', '*', '4', '5', '6', '-', '1', '2', '3', '+', '.', '0', "del", '='];
     const animationControl = useAnimationControls();
     const amountRef: RefObject<any> = useRef(null);
 
+    const [openCalculator, setOpenCalculator] = useState(false)
+    const [calculatorResult, setCalculatorResult] = useState(0)
+
     const animationDuration = 0.3;
     useEffect(() => {
-        animationControl.start("open");
-    });
+        if (openCalculator) setTimeout(()=>{animationControl.start("open")}, 100);
+    }, [openCalculator, animationControl]);
+
+    const toggleCalculator = () => {
+        setOpenCalculator((prev) => {return !prev});
+    }
 
     const onClick = (index:number) => {
         const element: any = amountRef.current;
@@ -98,53 +105,63 @@ function Calculator({content , resultCallback, closeCallback, title}: calculator
         return true;
     };
 
-    function closing(callback: Function|undefined = undefined) {
-
+    function closeCalculator(setValue = false) {
         animationControl.start("close").then(() => {
-            closeCallback();
-            if (callback) {
-                callback();
+            if (setValue) {
+                const value = amountRef.current.value;
+
+                setCalculatorResult(value === "" ? 0 : value);
             } 
+
+            toggleCalculator();     
         });
     }
 
     return(
         <>
-            <motion.div 
-            initial={"init"} animate={animationControl} transition={{duration: animationDuration}} 
-            variants={{
-                init: {opacity: 0},
-                open: {opacity: 1},
-                close: {opacity: 0}
-            }}
-            className={style.backgroundWrapper} onClick={() => closing()}>
-            </motion.div>
-            <motion.div
-            initial={"init"} animate={animationControl} transition={{duration: animationDuration}} 
-            variants={{
-                init: {translateY: 800},
-                open: {translateY: 0},
-                close: {translateY: 800}
-            }} 
-            className={style.mainWrapper}>
-                {title !== undefined && (<input type="text" readOnly  value={title} className={style.defaultTitle}></input>)} 
-                {title === undefined && (<input type="text" placeholder="Name" className={style.customTitle}></input>)} 
-            
-                {content ? content : ""}
+            <input value={calculatorResult} readOnly={true} placeholder={"Amount"} className={style.amountInput} type={"number"} onFocus={toggleCalculator}/>
 
-                <input type="text" ref={amountRef}  readOnly className={style.amount} placeholder="900 lv"></input>
+            {openCalculator && <>
+                <motion.div 
+                initial={"init"} 
+                animate={animationControl} 
+                transition={{duration: animationDuration}} 
+                variants={{
+                    init: {opacity: 0},
+                    open: {opacity: 1},
+                    close: {opacity: 0}
+                }}
+                className={style.backgroundWrapper} 
+                onClick={() => closeCalculator()}>
+                </motion.div>
 
-                <div className={style.buttonsSection}>
-                    {buttonsSymbols.map((char, index) => {
-                        return <button key={char} type="button" className={style.button} onClick={() => {onClick(index);}}>{char}</button>
-                    })}
-                </div>
+                <motion.div
+                initial={"init"} 
+                animate={animationControl} 
+                transition={{duration: animationDuration}} 
+                variants={{
+                    init: {translateY: 800},
+                    open: {translateY: 0},
+                    close: {translateY: 800}
+                }} 
+                className={style.mainWrapper}>
+                    {title !== undefined && (<input type="text" readOnly  value={title} className={style.defaultTitle}></input>)} 
+                    {content ? content : ""}
 
-                <button type="button" className={style.addButton} 
-                onClick={() => {onClick(19); closing(() => {resultCallback(amountRef.current.value);});}}>
-                    Add
-                </button>
-            </motion.div>
+                    <input type="text" ref={amountRef}  readOnly className={style.amount} placeholder="900"></input>
+
+                    <div className={style.buttonsSection}>
+                        {buttonsSymbols.map((char, index) => {
+                            return <button key={char} type="button" className={style.button} onClick={() => {onClick(index);}}>{char}</button>
+                        })}
+                    </div>
+                    
+                    <button type="button" className={style.addButton} 
+                    onClick={() => {onClick(19); closeCalculator(true)}}>
+                        Add
+                    </button>
+                </motion.div>
+            </>}
         </>
     );
 }

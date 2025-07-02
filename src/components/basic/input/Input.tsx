@@ -1,18 +1,19 @@
 "use client"
 
-import { HTMLInputTypeAttribute, useEffect, useRef } from "react";
+import { motion } from "framer-motion";
+import { InputHTMLAttributes, ReactNode } from "react";
 
-type inputProps = { className: string,  callbacks?: Function[],  events?: string[],  type?:  HTMLInputTypeAttribute, placeholder?: string, attributes?: Object}  
+type inputProps = { children?: ReactNode, attributes?: InputHTMLAttributes<HTMLInputElement>, motionAttributes?: any}  
 
-export default function Input({className, callbacks, events, type = "text", placeholder="", attributes={}} : inputProps) {
-    const buttonRef: any = useRef(null)
-    useEffect(() => {
-        events?.forEach((event, index) => {
-            buttonRef.current.addEventListener(event, callbacks?.[index]);
-        });
-    }, [buttonRef, events, callbacks])
-
-  return (
-    <input ref={buttonRef} className={className} type={type} placeholder = {placeholder} {...attributes}/>
-  );
+export default function Input({children, motionAttributes={}, attributes={}} : inputProps) {
+  if (motionAttributes) {
+    return (
+      <motion.input {...attributes} {...motionAttributes}>{children}</motion.input>
+    );
+  }
+  else {
+    return (
+      <input {...attributes}>{children}</input>
+    );
+  }
 }

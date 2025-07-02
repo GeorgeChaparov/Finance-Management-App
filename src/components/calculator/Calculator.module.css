@@ -11,7 +11,6 @@
 }
 
 .mainWrapper {
-
     width: calc(100vw - 60px);
     min-height: calc(522px - 46px);
     height: fit-content;
@@ -142,4 +141,33 @@
     border-radius: 30px;
 
     margin-top: 10px;
+}
+
+
+.amountInput{
+    width: calc(100% - 2px);
+    height: 60px;
+
+    background-color: transparent;
+    
+    border-radius: 14px;
+    border-color: white;
+    border-style: solid;
+    border-width: 1px;
+
+    color: white;
+
+    font-size: xx-large;
+
+    text-align: center;
+
+    margin-top: 36px;
+
+    appearance: none;
+    -moz-appearance: textfield;
+}
+
+.amountInput::-webkit-outer-spin-button,
+.amountInput::-webkit-inner-spin-button {
+  -webkit-appearance: none;
 }
