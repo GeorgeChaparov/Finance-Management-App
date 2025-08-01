@@ -41,10 +41,16 @@
     margin-right: 12px;
 }
 
+.openButton {
+    width: 100%;
+}
+
 .deleteButton {
     width: fit-content;
     height: fit-content;
 
     background-color: transparent;
     border: none;
+
+    float: right;
 }

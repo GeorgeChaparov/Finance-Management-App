@@ -3,20 +3,20 @@ import style from "./Transaction.module.css"
 import Button from "../basic/button/Button";
 import { Transaction as TransactionClass} from "@/src/types/Transaction";
 import { redirect } from "next/navigation";
+import { categoryIconsPath } from "@/src/consts";
 
-type PopupPanelProps = {transaction: TransactionClass, isOnHomePage?: boolean, onClick?: Function}
+type Transaction = {transaction: TransactionClass, isOnHomePage?: boolean, onClick?: Function}
 
-function Transaction({transaction, isOnHomePage = false}: PopupPanelProps) {
-
+function Transaction({transaction, isOnHomePage = false}: Transaction) {
     const amount = transaction.amount;
-    const amountStyle = amount >= 0 ? "amountPositive" : "amountNegative";
+    const amountStyle = transaction.isExpense == 0 ? "amountPositive" : "amountNegative";
     const endAmount = `${isOnHomePage ? Math.abs(amount) : amount}lv`;
 
     const dateOrTime = isOnHomePage ? transaction.date : transaction.time;
 
     return(
         <Button attributes={{onClick: async () => {"use server"; redirect(`/transaction/${transaction.id}`)}, className: style.background}}>
-            <Image className={style.logo} src={transaction.logo} alt="logo" width="40" height="40"/>
+            <Image className={style.logo} src={categoryIconsPath + transaction.iconName} alt={transaction.iconName} width="40" height="40"/>
             <div className={style.nameAndCategoryWrapper}>
                 <p className={style.name}>{transaction.name}</p>
                 <p className={style.category}>{transaction.category}</p>

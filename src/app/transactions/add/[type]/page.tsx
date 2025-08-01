@@ -1,7 +1,6 @@
 "use server";
 
 import style from "./page.module.css";
-import { Months } from "@/src/consts";
 import BackgroundCircles from "@/src/components/background-circles/BackgroundCircles";
 import Calculator from "@/src/components/calculator/Calculator";
 import Menu from "@/src/components/menu/Menu";
@@ -11,19 +10,35 @@ import DataTimePicker from "./SpecificComponents/DataTimePicker/DataTimePicker";
 import AddCancelButton from "./SpecificComponents/AddCancleButton/AddCancleButton";
 import CategoryMenu from "./SpecificComponents/CategoriesMenu/CategoriesMenu";
 import { getCategoryAction } from "@/src/lib/actions/categoryAction";
+import { createTransactionAction } from "@/src/lib/actions/transactionActions";
+import { convertDateForDisplay, convertTimeForDisplay } from "@/src/components/utilities";
 
 export default async function AddTransaction({searchParams}: {searchParams?: { [key: string]: string | string[] | undefined }}) {
   const date = new Date();
-  const today = `${Months[date.getMonth() + 1]} ${date.getDate()}, ${date.getFullYear()}`;
+
+  const month = date.getMonth() + 1;
+  const dayOfMonth = date.getDate();
+  const year = date.getFullYear();
+
+  const today = convertDateForDisplay({dayOfMonth, month, year});
+  
+  let stringMonth = month.toString()
+  if (stringMonth.length < 2) {
+    stringMonth = '0'+ month;
+  }
+
+  const rawDate=`${year}-${stringMonth}-${dayOfMonth}`;
+
   let categories: Record<string, string>[] = [{}];
 
-  let hours = date.getHours();
-  const period = hours >= 12 ? "pm" : "am";
-  hours = hours % 12 || 12; 
+  const hours = date.getHours();
   const minutes = String(date.getMinutes()).padStart(2, "0");
+  const rawTime = `${hours}:${minutes}`;
+
+
   
   const transactionDate = today;
-  const transactionTime = `${hours}:${minutes} ${period}`;
+  const transactionTime = convertTimeForDisplay(date);
 
   const response = await getCategoryAction();
   
@@ -62,12 +77,12 @@ export default async function AddTransaction({searchParams}: {searchParams?: { [
       height="100vh">
       </BackgroundCircles> 
 
-      <form className={style.page}>
+      <form className={style.page} action={createTransactionAction}>
 
         <section className={style.contentWrapperOne}>
-          <Input attributes={{type: "text", placeholder: "Name", className: style.name}} />
+          <Input attributes={{name: "categoryName", type: "text", placeholder: "Name", className: style.name, required: true}} />
 
-          <DataTimePicker date={transactionDate} time={transactionTime}></DataTimePicker>
+          <DataTimePicker rawDate={rawDate} rawTime={rawTime} date={transactionDate} time={transactionTime}></DataTimePicker>
 
           <RadioButtons></RadioButtons>
           
@@ -75,7 +90,7 @@ export default async function AddTransaction({searchParams}: {searchParams?: { [
         </section>
               
         <section className={style.contentWrapperTwo}>
-          <textarea className={style.note} placeholder="Note"></textarea>
+          <textarea name="note" className={style.note} placeholder="Note"></textarea>
           <Calculator></Calculator>
         </section>
 

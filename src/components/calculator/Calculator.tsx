@@ -119,7 +119,7 @@ function Calculator({content, title}: calculatorProps) {
 
     return(
         <>
-            <input value={calculatorResult} readOnly={true} placeholder={"Amount"} className={style.amountInput} type={"number"} onFocus={toggleCalculator}/>
+            <input name="amount" value={calculatorResult} readOnly={true} placeholder={"Amount"} className={style.amountInput} type={"number"} onFocus={toggleCalculator}/>
 
             {openCalculator && <>
                 <motion.div 

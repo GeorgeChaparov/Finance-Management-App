@@ -1,7 +1,6 @@
 "use client"
 
 import style from "./page.module.css"
-import starIcon from "@/public/category_icons/0_star_icon.png"
 import addIcon from "@/public/add_white.png"
 import Image from "next/image"
 import { useState, useEffect} from "react"
@@ -10,6 +9,8 @@ import Button from "@/src/components/basic/button/Button"
 import CategoryElement from "@/src/components/category-element/CategoryElement"
 import Menu from "@/src/components/menu/Menu"
 import { GetCategoryResponse, DBCategory } from "@/src/types/Categories"
+
+export const experimental_ppr = true
 
 export default function Categories() {
     const [shouldShowAddForm, setShouldShowAddForm] = useState(false);

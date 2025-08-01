@@ -3,119 +3,83 @@
 import style from "./page.module.css";
 import DateSelectPanel from "./SpecificComponents/DateSelectPanel/DateSelectPanel";
 import CustomChart from "./SpecificComponents/CustomChart/CustomChart";
-import { Months, transactionsArray } from "@/src/consts";
+import { Months } from "@/src/consts";
 import { Transaction } from "@/src/types/Transaction";
 import BackgroundCircles from "@/src/components/background-circles/BackgroundCircles";
 import TransactionByDay from "@/src/components/transactions-by-day/TransactionByDay";
+import { getTransactionsByUserAndMonthAction } from "@/src/lib/actions/transactionActions";
+import { convertDateForDisplay, convertTimeForDisplay, getWeekdayName } from "@/src/components/utilities";
 
 export default async function Transactions({params}: {params:any}) {
   type MonthsStrings = keyof typeof Months;
   const { month } = await params;
-
+  const monthAsNumber = Months[month as MonthsStrings]
   const currentMonth = new Date().getMonth()
   const currentYear =  new Date().getFullYear()
-  const date = `${month}, ${Months[month as MonthsStrings] > currentMonth ? currentYear - 1 : currentYear}`;
-
-  let transactions = transactionsArray;
+  const date = `${month}, ${monthAsNumber > currentMonth ? currentYear - 1 : currentYear}`;
 
   let netAmount = 0;
   let positiveAmount = 0;
   let negativeAmount = 0;
 
-  const expensesByCategory = getExpensesByCategory(transactions)
-  
-  const finalExpenses = expensesByCategory.slice(0, 4);
+  const response = await getTransactionsByUserAndMonthAction(monthAsNumber);
 
-  let otherExpenses = 0;
-  for (let i = 4; i < expensesByCategory.length; i++) {
-    const expense = expensesByCategory[i];
-    otherExpenses+= expense[1];
+  if (!response.successful) {
+    console.log(response.message);
   }
 
-  finalExpenses.push(["Others", otherExpenses]);
-
-  const categories = finalExpenses.map(item => item[0]);
-  const amountForCategory = finalExpenses.map(item => item[1]);
-
-  for (let i = 0; i < transactions.length; i++) {
-    const amount = transactions[i].amount;
-    netAmount += amount;
-
-    if (amount > 0) {
-      positiveAmount += amount;
-    }else{
-      negativeAmount += amount;
-    }
+  if (!response.data) {
+    return
   }
 
-  transactions.sort((a, b) => {
-    const toComparable = (d:string) => d.split('.').reverse().join('');
+  let dates = response?.data;
 
-    return toComparable(a.date).localeCompare(toComparable(b.date));
-  });
+  const transactionsByDate = dates.map((transactionsAndDate: any, index: number) => {
+    let transactions = JSON.parse(transactionsAndDate.transactions);
 
-  transactions.reverse();
+    transactions = transactions.map((transaction: Transaction) => {
+      transaction.weekDay = getWeekdayName(transaction.date);
+      transaction.date = convertDateForDisplay(transaction.date);
+      transaction.time = convertTimeForDisplay(transaction.time);
+      return transaction;
+    })
 
-  
-  const transactionsByDate = GetTransactionsByDay(transactions);
-  transactionsByDate.forEach(innerTransitions => {
-    innerTransitions = sortTransactionsByTime(innerTransitions);
-    innerTransitions.reverse();
+    return transactions
   })
   
-  function GetTransactionsByDay(_transactions:Array<Transaction>) {
-    let transactionsByDay = [];
-    let currentDayGroup: Transaction[] = [];
-    let currentDate = _transactions[0].date;
+  const categoriesAndAmounts = getCategories();
+  const categories = Array.from(categoriesAndAmounts.keys());
+  const amountForCategory = Array.from(categoriesAndAmounts.values());
+
+
   
-    for (let i = 0; i < _transactions.length; i++) {
-      const transaction = _transactions[i];
+  function getCategories() {
+    const categoriesMap = new Map();
   
-      if (transaction.date === currentDate) {
-        currentDayGroup.push(transaction);
-      } else {
-        transactionsByDay.push(currentDayGroup);
+    transactionsByDate.forEach((transactions: Transaction[]) => {
+      transactions.forEach((transaction: Transaction) => {
+        
+        if (transaction.isExpense === 0) {
+          netAmount += transaction.amount;
+          positiveAmount += transaction.amount;
+        }
+        else {
+          netAmount -= transaction.amount;
+          negativeAmount += transaction.amount;
+        }
 
-        currentDayGroup = [transaction];
-        currentDate = transaction.date;       
-      }
-    }
-
-    if (currentDayGroup.length > 0) {
-      transactionsByDay.push(currentDayGroup);
-    }
-  
-    return transactionsByDay;
-  }
-
-  function getExpensesByCategory(transactions: Transaction[]) {
-    const expenseByCategory = new Map();
-
-    for (let i = 0; i < transactions.length; i++) {
-      const transaction = transactions[i];
-      
-      if (transaction.amount > 0) {
-        continue;
-      }
-
-      if (expenseByCategory.has(transaction.category)) {
-        expenseByCategory.set(transaction.category, expenseByCategory.get(transaction.category) + transaction.amount)
-      }else{
-        expenseByCategory.set(transaction.category, transaction.amount)
-      }
-    }
-    return [...expenseByCategory].sort((a, b) => a[1] - b[1]);;
-  }
-
-  function sortTransactionsByTime(transactions: Transaction[]) {
-    return [...transactions].sort((a, b) => {
-      // return a.time.localeCompare(b.time);
-      
-      // If we need to handle 24-hour format specially (not sure yet):
-      return Number(a.time.replace(':', '')) - Number(b.time.replace(':', ''));
+        if (categoriesMap.has(transaction.category)) {
+          categoriesMap.set(transaction.category, categoriesMap.get(transaction.category) + transaction.amount);
+        }
+        else {
+          categoriesMap.set(transaction.category, transaction.amount);
+        }
+      });
     });
+   
+    return categoriesMap;
   }
-  
+
   return (
     <div className={style.page}>
       <BackgroundCircles  
@@ -162,7 +126,9 @@ export default async function Transactions({params}: {params:any}) {
         </section>
       </section>
 
-      {transactionsByDate.map((transactions, index) => <TransactionByDay key={index} transactions={transactions}/>)}   
+      {transactionsByDate.map((transactions: any, index: number) => {
+        return <TransactionByDay key={index} transactions={transactions}/>
+      })}   
     </div>
   );
 }

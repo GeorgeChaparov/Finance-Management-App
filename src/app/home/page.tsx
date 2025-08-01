@@ -3,7 +3,7 @@
 import style from "./page.module.css";
 import Image from "next/image";
 import searchIcon from "@/public/search.png"
-import { Months, transactionsArray } from "@/src/consts";
+import { Months } from "@/src/consts";
 import BackgroundCircles from "@/src/components/background-circles/BackgroundCircles";
 import Input from "@/src/components/basic/input/Input";
 import { Transaction as TransactionClass } from "@/src/types/Transaction";
@@ -12,24 +12,25 @@ import Menu from "@/src/components/menu/Menu";
 import { User } from "@/src/types/User";
 import Link from "next/link";
 import { getUserAction } from "@/src/lib/actions/userActions";
-import { getUserIdFromCookieAction } from "@/src/lib/actions/authActions";
 import { ServerResponse } from "@/src/types/ServerRespons";
+import { getTransactionsByUserAction } from "@/src/lib/actions/transactionActions";
 
 export default async function Home() {
-  const currentMonth = new Date().getMonth();
-  const transactions = transactionsArray;
+  const currentMonth = new Date().getMonth() + 1;
+  
+  const userResponse: ServerResponse = await getUserAction();
+  const user = userResponse.data != null ? userResponse.data.user as User : null;
 
+  const transactionResponse = await getTransactionsByUserAction();
 
-  const id = await getUserIdFromCookieAction();
-  const response: ServerResponse = await getUserAction({id: id});
-  const user = response.data != null ? response.data.user as User : null;
-
+  const transactions: TransactionClass[] = transactionResponse.data?.transactions as TransactionClass[];
+  
   const formatter = new Intl.NumberFormat('en-US', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2
   });
 
-  if (user != null) {
+  function page() {
     return (
       <>
         <div className={style.page}>
@@ -58,18 +59,18 @@ export default async function Home() {
           <section className={style.moneySection}>
             <div className={style.totalBalance}>
               <span className={style.balanceTitle}>Total Balance</span>
-              <span className={style.balanceAmount}>{formatter.format(Number(user.cashAmount) + Number(user.bankAmount))}lv</span>
+              <span className={style.balanceAmount}>{formatter.format(Number(user?.cashAmount) + Number(user?.bankAmount))}lv</span>
             </div>
 
             <div className={style.seperateAmountContainer}>
               <div className={style.inBankWrapper}>
                 <span className={style.inBankTitle}>Bank</span>
-                <span className={style.inBankAmount}>{formatter.format(user.bankAmount)}</span>
+                <span className={style.inBankAmount}>{formatter.format(Number(user?.bankAmount))}</span>
               </div>
 
               <div className={style.ceshWrapper}>
                 <span className={style.ceshTitle}>Cash</span>
-                <span className={style.ceshAmount}>{formatter.format(user.cashAmount)}</span>
+                <span className={style.ceshAmount}>{formatter.format(Number(user?.cashAmount))}</span>
               </div>
             </div>
           </section>
@@ -84,6 +85,7 @@ export default async function Home() {
                   <Input attributes={{placeholder: "Search transaction", type: "search", className: style.searchBar}}></Input>
                   <Image className={style.searchIcon} src={searchIcon} alt="settings image"></Image>
               </section> 
+
               {transactions.map((transaction: TransactionClass) => {
                 return (
                   <Transaction key={transaction.id} transaction={transaction} isOnHomePage = {true}/>
@@ -92,9 +94,14 @@ export default async function Home() {
             </div>
           </section>
         </div>
-        <Menu/>
+        <Menu />
       </>
     );
+  }
+
+
+  if (user != null) {
+    return page();
   }
   else
   {

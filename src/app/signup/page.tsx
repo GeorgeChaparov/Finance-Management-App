@@ -7,7 +7,7 @@ import AnimatedFormBackground from "@/src/components/animated-form-background/An
 import Input from "@/src/components/basic/input/Input";
 import Button from "@/src/components/basic/button/Button";
 
-export default function Page() {
+export default async function Page() {
   return (
     <div className={style.page}>
         <BackgroundCircles  

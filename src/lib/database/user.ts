@@ -3,6 +3,7 @@ import { HttpStatus } from "@/src/enums";
 import { AppError } from "../errors/serverError";
 import pool from "./db";
 import { DBUser, UserRequest} from "@/src/types/User"
+import { PaymentType } from "@/src/types/Transaction";
 
 export async function getUser(requestedUser: UserRequest): Promise<DBUser> {
   try {
@@ -31,6 +32,42 @@ export async function createUser(username: string, email: string, password: stri
   try {
     const [result]: any = await pool.query('INSERT INTO user (username, email, password, preferences, bankAmount, cashAmount) VALUES (?, ?, ?, ?, ?, ?)', [username, email, password, preferences, bankAmount, cashAmount]);
     return result.insertId;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function updateUserBank(userId: string, amount: string, transactionType: PaymentType):Promise<void>{
+  try {
+    switch (transactionType) {
+      case PaymentType.expense:
+        await pool.query('UPDATE user SET bankAmount = bankAmount - ? WHERE id = ?', [amount, userId]);
+        break;
+      case PaymentType.income: 
+        await pool.query('UPDATE user SET bankAmount = bankAmount + ? WHERE id = ?', [amount, userId]);
+        break;
+    
+      default:
+        break;
+    }
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function updateUserCash(userId: string, amount: string, transactionType: PaymentType):Promise<void>{
+  try {
+    switch (transactionType) {
+      case PaymentType.expense:
+        await pool.query('UPDATE user SET cashAmount = cashAmount - ? WHERE id = ?', [amount, userId]);
+        break;
+      case PaymentType.income: 
+        await pool.query('UPDATE user SET cashAmount = cashAmount + ? WHERE id = ?', [amount, userId]);
+        break;
+    
+      default:
+        break;
+    }
   } catch (error) {
     throw error;
   }

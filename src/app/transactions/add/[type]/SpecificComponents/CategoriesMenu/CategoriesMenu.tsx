@@ -44,6 +44,14 @@ export default function CategoryMenu({categories}:{categories: Record<string, st
         {categories[currentCategoryId].name}
       </Button>
 
+      {categories.map((category, index) => {
+        if (index == currentCategoryId) {
+          return (<input key={index} type="radio" name='categoryId' id={`categoryId_${index}`} value={category.id} hidden required readOnly defaultChecked onChange={closeCategories}/>)
+        } else {
+          return (<input key={index} type="radio" name='categoryId' id={`categoryId_${index}`} value={category.id} hidden required readOnly onChange={closeCategories}/>)
+        }
+      })}
+
       {showCategories && <>
           <motion.div
           initial={"init"} 
@@ -71,21 +79,18 @@ export default function CategoryMenu({categories}:{categories: Record<string, st
 
           {categories.map((category, index) => {
             if (index == currentCategoryId) {
-              return (<div key={index}>
-                <input type="radio" name='categoryId' id={`categoryId_${index}`} value={category.id} hidden required readOnly defaultChecked onChange={closeCategories}/>
-                <label htmlFor={`categoryId_${index}`} className={style.category}>
+              return (
+                <label key={index} htmlFor={`categoryId_${index}`} className={style.category}>
                   <Image className={style.categoryImage} src={ categoryIconsPath + category.iconName } width={20} height={20} alt={category.iconName}/>
                   {category.name}
-                </label>
-              </div>)
+                </label>)
             } else {
-              return (<div key={index}>
-                <input type="radio" name='categoryId' id={`categoryId_${index}`} value={category.id} hidden required readOnly onChange={closeCategories}/>
-                <label htmlFor={`categoryId_${index}`} className={style.category}>
+              return (
+                <label key={index} htmlFor={`categoryId_${index}`} className={style.category}>
                   <Image className={style.categoryImage} src={ categoryIconsPath + category.iconName } width={20} height={20} alt={category.iconName}/>
                   {category.name}
                 </label>
-              </div>)
+              )
             }
           })}
           </motion.div>

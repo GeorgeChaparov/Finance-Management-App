@@ -20,4 +20,3 @@ export interface UserRequest {
 export interface DBUser extends User{
     id: string;
 }
-

@@ -54,7 +54,7 @@
 
 .chartContainer{
   width: 100%;
-  height: 200px;
+  height: 250px;
 
   display: flex;
 
@@ -69,7 +69,7 @@
 .chartInnerDiv{
   height: 300px;
   width: 300px;
-  top: -50px;
+  top: -25px;
   position: relative;
 }
 

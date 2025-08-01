@@ -5,11 +5,14 @@ import { DBUser, User, UserRequest } from "../../types/User"
 import { getUser } from "../database/user";
 import { errorLogger } from "../loggers/errorLogger";
 import { HttpStatus } from "@/src/enums";
+import { getUserIdFromCookieAction } from "./authActions";
 
-export async function getUserAction(requestedUser: UserRequest): Promise<ServerResponse> {
-    try {       
-       const user = await getUser(requestedUser) as User;  
-       return {successful: true, data:{user}, statusCode: HttpStatus.OK_200}
+export async function getUserAction(): Promise<ServerResponse> {
+    try {
+        const userId = await getUserIdFromCookieAction();
+        const user = await getUser({id: userId}) as User;  
+        
+        return {successful: true, data:{user}, statusCode: HttpStatus.OK_200}
     } catch (error) {
         return {...errorLogger.log(error), data: {}};
     }

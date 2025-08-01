@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react";
+import { MouseEventHandler, useEffect, useState } from "react";
 import style from "./AddTransactionButton.module.css"
 import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence, useAnimationControls } from "framer-motion";
@@ -15,28 +15,37 @@ function AddTransactionButton({hide}: AddTransactionButtonProps) {
     const [showAddPanel, setShowAddPanel] = useState(false);
 
     useEffect(() => {
-        controls.start(!showAddPanel ? "init" : "rotate");
+        controls.start(!showAddPanel ? "open" : "close");
     },[showAddPanel, controls])
 
-    const showAndHideAddOptions = () =>{
+    const showAndHideAddOptions = () => {
         toggleElementScroll(document.body);
-        setShowAddPanel(!showAddPanel);
+        setShowAddPanel((prev) => {return !prev});
     }
 
-    const loadScan = () =>{
+    const close = async () => {
+        toggleElementScroll(document.body);
+        const ready = await controls.start("close");
+
+        return ready
+    }
+
+    const loadScan = (e: any) => {
         //router.push('/')
     };
 
-    const loadIncome = () =>{
-        document.body.classList.toggle("disableScroll");
-        setShowAddPanel(!showAddPanel);
-        setTimeout(() => {router.push('/transactions/add/income')}, 200)
+    const loadIncome = (e: any) => {
+        e.stopPropagation()
+        close().then(() => {
+            router.push('/transactions/add/income');
+        })
     };
 
-    const loadExpense = () =>{
-        document.body.classList.toggle("disableScroll");
-        setShowAddPanel(!showAddPanel);
-        setTimeout(() => {router.push('/transactions/add/expense')}, 200)
+    const loadExpense = (e: any) => {
+        e.stopPropagation()
+        close().then(() => {
+            router.push('/transactions/add/expense');
+        })
     };
 
     const optionsTextVariants = {
@@ -50,14 +59,20 @@ function AddTransactionButton({hide}: AddTransactionButtonProps) {
         <>
             {!hide && (<>
                 <motion.button 
-                initial="init" animate={controls}
+                initial="open" animate={controls}
                 variants={{
-                    init:{rotate: "0deg",  translateX: 0, transition:{duration: 0.3, ease: "easeInOut"}}, 
-                    rotate:{rotate: "135deg", transition:{duration: 0.3, ease:"circInOut"}} }}
+                    open:{rotate: "0deg",  translateX: 0, transition:{duration: 0.3, ease: "easeInOut"}}, 
+                    close:{rotate: "135deg", transition:{duration: 0.3, ease:"circInOut"}} }}
                 onClick={showAndHideAddOptions} className={style.addButton}></motion.button>
                 <AnimatePresence>
                 {showAddPanel && (
-                    <motion.div initial={{opacity: 0}} animate={{opacity: 1}} transition={{duration: 0.1}} exit={{opacity: 0}} className={style.background}>
+                    <motion.div 
+                    initial={{opacity: 0}} 
+                    animate={{opacity: 1}} 
+                    transition={{duration: 0.1}} 
+                    exit={{opacity: 0}} 
+                    className={style.background}
+                    onClick={showAndHideAddOptions}>
                         <div className={style.addOptions}>
                             <motion.div 
                             initial={{translate: "102px 104px"}}

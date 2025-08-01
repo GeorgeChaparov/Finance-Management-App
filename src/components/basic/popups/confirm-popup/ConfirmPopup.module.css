@@ -1,0 +1,73 @@
+.wrapper {
+    width: 100%;
+    height: 100%;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.background {
+    width: 250px;
+    height: fit-content;
+
+    position: fixed;
+    top: 150px;
+    left: calc(50% - 125px);
+    background-color: rgb(255, 255, 255);
+    z-index: 1;
+
+    padding: 10px;
+
+    border-radius: 10px;
+    border-style: none;
+    border: 0px;
+}
+
+.title {
+    width: 100%;
+    height: fit-content;
+
+    text-align: center;
+}
+
+.message {
+    width: 100%;
+    height: fit-content;
+
+    margin-top: 8px;
+
+    font-size: 18px;
+}
+
+.buttonWrapper {
+    width: 100%;
+    height: fit-content;
+
+    margin-top: 8px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
+
+.confirmButton {
+    width: 33%;
+    height: fit-content;
+
+    color: #56C35D;
+    font-size: 18px;
+
+    border-radius: 5px;
+}
+
+.cencelButton {
+    width: 33%;
+    height: fit-content;
+
+    color: #C14B4B;
+    font-size: 18px;
+
+    border-radius: 5px;
+}

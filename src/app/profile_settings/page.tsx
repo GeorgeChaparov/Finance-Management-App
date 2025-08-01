@@ -1,3 +1,4 @@
+
 import style from "./page.module.css";
 import Image from "next/image";
 import starIcon from "@/public/category_icons/0_star_icon.png"

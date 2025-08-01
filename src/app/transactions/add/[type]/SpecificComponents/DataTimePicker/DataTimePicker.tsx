@@ -5,11 +5,11 @@ import style from "./page.module.css"
 import { Months } from '@/src/consts';
 import Input from '@/src/components/basic/input/Input';
 
-export default function DataTimePicker({date, time} : {date: string, time: string}) {
+export default function DataTimePicker({rawDate, rawTime, date, time} : {rawDate: string, rawTime: string, date: string, time: string}) {
     const [transactionDate, setTransactionDate] = useState(date);
     const [transactionTime, setTransactionTime] = useState(time);
-    const [dateValue, setDateValue] = useState("");
-    const [timeValue, setTimeValue] = useState("");
+    const [dateValue, setDateValue] = useState(rawDate);
+    const [timeValue, setTimeValue] = useState(rawTime);
 
     const handleDateChange = (e:any) => {
     const target = e.target as HTMLInputElement;
@@ -18,7 +18,7 @@ export default function DataTimePicker({date, time} : {date: string, time: strin
     if (!value) {
       return;
     }
-
+    
     const [year, month, day] = value.split("-");
     setTransactionDate(`${Months[Number(month)]} ${day}, ${year}`);
     setDateValue(value);
@@ -27,7 +27,7 @@ export default function DataTimePicker({date, time} : {date: string, time: strin
   const handleTimeChange = (e: any) => {
     const target = e.target as HTMLInputElement;
     const value = target.value;
-    
+
     if (!value) {
       return;
     }
@@ -46,7 +46,7 @@ export default function DataTimePicker({date, time} : {date: string, time: strin
             <div>
                 <label htmlFor="datePicker" className={style.datePicker}>{transactionDate}</label>
                 <Input 
-                attributes={{id: "datePicker", defaultValue: dateValue, type: "date", className: style.picker,
+                attributes={{name: "date", id: "datePicker", defaultValue: dateValue, type: "date", className: style.picker,
                     onClick: (e) => {
                         const target = e.target as HTMLInputElement;
                         target.showPicker();
@@ -57,7 +57,7 @@ export default function DataTimePicker({date, time} : {date: string, time: strin
             <div className={style.timePickerContainer}>
                 <label htmlFor="timePicker" className={style.timePicker}>{transactionTime}</label>
                 <Input 
-                attributes={{id: "timePicker", defaultValue: timeValue, type: "time", className: style.picker,
+                attributes={{name: "time", id: "timePicker", defaultValue: timeValue, type: "time", className: style.picker,
                     onClick: (e) => {
                         const target = e.target as HTMLInputElement;
                         target.showPicker();

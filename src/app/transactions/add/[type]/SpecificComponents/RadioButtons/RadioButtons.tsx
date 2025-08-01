@@ -40,10 +40,10 @@ export const RadioButtons = () => {
 
   return (
     <>
-      <Input attributes={{ name: "transactionType", id: "expenseRadio", hidden: true, type: "radio", onClick: () => setSelectedType("expense")}}/>
-      <Input attributes={{ name: "transactionType", id: "incomeRadio", hidden: true, type: "radio", onClick: () => setSelectedType("income")}}/>
-      <Input attributes={{ name: "transactionMethot", id: "bankRadio", hidden: true, type: "radio", onClick: () => {setSelectedMethod("bank")}}}/>
-      <Input attributes={{ name: "transactionMethot", id: "cashRadio", hidden: true, type: "radio", onClick: () => {setSelectedMethod("cash")}}}/>
+      <Input attributes={{ value: "expense", defaultChecked: selectedType == "expense", name: "transactionType", id: "expenseRadio", hidden: true, type: "radio", onClick: () => setSelectedType("expense")}}/>
+      <Input attributes={{ value: "income", defaultChecked: selectedType == "income", name: "transactionType", id: "incomeRadio", hidden: true, type: "radio", onClick: () => setSelectedType("income")}}/>
+      <Input attributes={{ value: "bank", defaultChecked: selectedMethod == "bank", name: "transactionMethot", id: "bankRadio", hidden: true, type: "radio", onClick: () => {setSelectedMethod("bank")}}}/>
+      <Input attributes={{ value: "cash", defaultChecked: selectedMethod == "cash", name: "transactionMethot", id: "cashRadio", hidden: true, type: "radio", onClick: () => {setSelectedMethod("cash")}}}/>
       
       <section className={style.section}>
         <Label attributes={{className: style.radioButton, htmlFor: "expenseRadio"}} motionAttributes={{animate: expensControl, variants: radioButtonsVariants}}>Expense</Label>

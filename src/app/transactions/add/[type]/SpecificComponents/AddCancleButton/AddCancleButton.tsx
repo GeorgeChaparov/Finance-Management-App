@@ -6,11 +6,13 @@ import Button from '@/src/components/basic/button/Button';
 import DummyAddTransactionButton from '@/src/components/dummy-add-transaction-button/DummyAddTransactionButton';
 import { useAnimationControls } from 'framer-motion';
 import { useRouter } from 'next/navigation';
+import { useConfirm } from '@/src/components/basic/popups/confirm-popup/ConfirmPopup';
 
 
 export default function AddCancleButton() {
   const finalButtonsControls = useAnimationControls();
   const router = useRouter();
+  const confirm  = useConfirm();
   
   useEffect(() => {
     finalButtonsControls.start("action");
@@ -19,9 +21,12 @@ export default function AddCancleButton() {
   return (
     <section className={style.contentWrapperThree}>
       <DummyAddTransactionButton 
-        actionCallback={() => {
-          finalButtonsControls.start("init");
-          setTimeout(() => {router.back()}, 200);
+        actionCallback={async () => {
+          const ok = await confirm({title: "Cenceling...", message: "Are you sure?"})
+            
+          if (!ok) return;
+
+          finalButtonsControls.start("init").then(() => {router.back()});
         }}
         controls={finalButtonsControls} 
         variants={{
@@ -38,7 +43,7 @@ export default function AddCancleButton() {
             action:{translateX: 0, transition:{duration: 0.3, ease:"easeInOut", delay: 0.2}, fontSize: "32px", width: "112px"}
           }
         }}
-        attributes={{className: style.addButton}}>
+        attributes={{className: style.addButton, type: "submit"}}>
         Add
       </Button>
     </section>
