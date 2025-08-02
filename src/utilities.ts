@@ -1,4 +1,4 @@
-import { Months, daysOfWeek } from "../consts";
+import { Months, daysOfWeek } from "./consts";
 
 export function convertDateForDisplay(date: string | Date | { month: number, dayOfMonth: number, year: number }) {
     let month: number;

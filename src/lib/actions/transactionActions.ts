@@ -90,12 +90,34 @@ export async function getTransactionsByUserAction(): Promise<ServerResponse> {
   }
 }
 
-export async function getTransactionsByUserAndMonthAction(month: number): Promise<ServerResponse> {
+export async function getTransactionsByUserAndMonthAction(monthAsNumber: number, month: string): Promise<ServerResponse> {
   try {
     const userId = await getUserIdFromCookieAction();
-    const transactionsByDate = await getAllTransactionsOfUserByMonth(userId, month);
+    let transactionsByDate: any[] = await getAllTransactionsOfUserByMonth(userId, monthAsNumber);
 
-    return { successful: true, data: transactionsByDate, statusCode: HttpStatus.OK_200 };
+    if (transactionsByDate.length > 0) {
+        return { successful: true, data: transactionsByDate, statusCode: HttpStatus.OK_200 };
+    }
+
+    let monthToTry = monthAsNumber - 1;
+
+    while (monthToTry != monthAsNumber) {
+
+        transactionsByDate = await getAllTransactionsOfUserByMonth(userId, monthToTry);
+
+        if (transactionsByDate.length > 0) {
+            return { successful: true, data: {dates: transactionsByDate, month: monthToTry}, statusCode: HttpStatus.Accepted_202, message: `You dont have any transactions for ${month}.`};
+        }
+
+        monthToTry--;
+
+        if (monthToTry === 0) {
+            monthToTry = 12;
+        }
+    }
+
+    throw new AppError("You don't have any transactions yet.", HttpStatus.NotFound_404);
+
   } catch (error) {
     return errorLogger.log(error);    
   }

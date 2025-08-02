@@ -19,7 +19,7 @@ export default function CategoryElement({category, deleteCallback} : {category: 
         let response = null;
 
         setTimeout(async() => {
-            const ok = await confirm({title: "Deleting...", message: "Are you sure you want to delete this category?"})
+            const ok = await confirm({title: "Deleting...", message: "Are you sure you want to delete this category? This will delete all transactions associated with it."})
             
             if (!ok) return;
 

@@ -18,6 +18,10 @@ export default function DateSelectPanel({text}:{text: string}) {
     const monthOnClick = (event: React.MouseEvent<HTMLElement>) =>{
         const target = event.target as HTMLElement;
         const month = target.innerHTML;
+
+        if (text.includes(month)) {
+            return;
+        }
         router.push(`/transactions/${month}`); 
     };
 

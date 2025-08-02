@@ -12,34 +12,34 @@ export default function DataTimePicker({rawDate, rawTime, date, time} : {rawDate
     const [timeValue, setTimeValue] = useState(rawTime);
 
     const handleDateChange = (e:any) => {
-    const target = e.target as HTMLInputElement;
-    const value = target.value;
+      const target = e.target as HTMLInputElement;
+      const value = target.value;
 
-    if (!value) {
-      return;
-    }
+      if (!value) {
+        return;
+      }
+
+      const [year, month, day] = value.split("-");
+      setTransactionDate(`${Months[Number(month)]} ${day}, ${year}`);
+      setDateValue(value);
+    };
+
+    const handleTimeChange = (e: any) => {
+      const target = e.target as HTMLInputElement;
+      const value = target.value;
     
-    const [year, month, day] = value.split("-");
-    setTransactionDate(`${Months[Number(month)]} ${day}, ${year}`);
-    setDateValue(value);
-  };
-
-  const handleTimeChange = (e: any) => {
-    const target = e.target as HTMLInputElement;
-    const value = target.value;
-
-    if (!value) {
-      return;
-    }
-
-    const [hours, minutes] = value.split(":");
-    const hoursInNumbers = Number(hours);
-    const period = hoursInNumbers >= 12 ? "pm" : "am";
-    const formattedHours = (hoursInNumbers % 12 || 12).toString().padStart(2, "0");
+      if (!value) {
+        return;
+      }
     
-    setTransactionTime(`${formattedHours}:${minutes} ${period}`);
-    setTimeValue(value);
-  };
+      const [hours, minutes] = value.split(":");
+      const hoursInNumbers = Number(hours);
+      const period = hoursInNumbers >= 12 ? "pm" : "am";
+      const formattedHours = (hoursInNumbers % 12 || 12).toString().padStart(2, "0");
+      
+      setTransactionTime(`${formattedHours}:${minutes} ${period}`);
+      setTimeValue(value);
+    };
 
     return (
         <section className={style.dateTimePicker}>

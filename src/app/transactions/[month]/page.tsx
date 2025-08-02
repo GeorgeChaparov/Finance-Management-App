@@ -8,21 +8,22 @@ import { Transaction } from "@/src/types/Transaction";
 import BackgroundCircles from "@/src/components/background-circles/BackgroundCircles";
 import TransactionByDay from "@/src/components/transactions-by-day/TransactionByDay";
 import { getTransactionsByUserAndMonthAction } from "@/src/lib/actions/transactionActions";
-import { convertDateForDisplay, convertTimeForDisplay, getWeekdayName } from "@/src/components/utilities";
+import { convertDateForDisplay, convertTimeForDisplay, getWeekdayName } from "@/src/utilities";
+import TimedPopup from "@/src/components/basic/popups/timed-popup/TimedPopup";
 
 export default async function Transactions({params}: {params:any}) {
   type MonthsStrings = keyof typeof Months;
-  const { month } = await params;
-  const monthAsNumber = Months[month as MonthsStrings]
+  let { month } = await params;
+  let monthAsNumber = Months[month as MonthsStrings]
   const currentMonth = new Date().getMonth()
   const currentYear =  new Date().getFullYear()
-  const date = `${month}, ${monthAsNumber > currentMonth ? currentYear - 1 : currentYear}`;
+  let renderTimedPopup = false;
 
   let netAmount = 0;
   let positiveAmount = 0;
   let negativeAmount = 0;
 
-  const response = await getTransactionsByUserAndMonthAction(monthAsNumber);
+  const response = await getTransactionsByUserAndMonthAction(monthAsNumber, month);
 
   if (!response.successful) {
     console.log(response.message);
@@ -32,7 +33,18 @@ export default async function Transactions({params}: {params:any}) {
     return
   }
 
-  let dates = response?.data;
+  const data = response?.data
+  let dates = data;
+  
+  if (data.month) {
+    monthAsNumber = data.month;
+    month = Months[data.month as MonthsStrings];
+    renderTimedPopup = true;
+    dates = data.dates
+  }
+
+  const date = `${month}, ${monthAsNumber > currentMonth ? currentYear - 1 : currentYear}`;
+
 
   const transactionsByDate = dates.map((transactionsAndDate: any, index: number) => {
     let transactions = JSON.parse(transactionsAndDate.transactions);
@@ -82,6 +94,7 @@ export default async function Transactions({params}: {params:any}) {
 
   return (
     <div className={style.page}>
+      {renderTimedPopup && <TimedPopup message = {response.message == undefined ? "" : response.message} duration = {3}/>}
       <BackgroundCircles  
       circles={[
         {

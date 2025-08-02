@@ -11,7 +11,7 @@ import AddCancelButton from "./SpecificComponents/AddCancleButton/AddCancleButto
 import CategoryMenu from "./SpecificComponents/CategoriesMenu/CategoriesMenu";
 import { getCategoryAction } from "@/src/lib/actions/categoryAction";
 import { createTransactionAction } from "@/src/lib/actions/transactionActions";
-import { convertDateForDisplay, convertTimeForDisplay } from "@/src/components/utilities";
+import { convertDateForDisplay, convertTimeForDisplay } from "@/src/utilities";
 
 export default async function AddTransaction({searchParams}: {searchParams?: { [key: string]: string | string[] | undefined }}) {
   const date = new Date();
@@ -22,12 +22,7 @@ export default async function AddTransaction({searchParams}: {searchParams?: { [
 
   const today = convertDateForDisplay({dayOfMonth, month, year});
   
-  let stringMonth = month.toString()
-  if (stringMonth.length < 2) {
-    stringMonth = '0'+ month;
-  }
-
-  const rawDate=`${year}-${stringMonth}-${dayOfMonth}`;
+  const rawDate=`${year}-${String(month).padStart(2, "0")}-${String(dayOfMonth).padStart(2, "0")}`;
 
   let categories: Record<string, string>[] = [{}];
 
@@ -80,7 +75,7 @@ export default async function AddTransaction({searchParams}: {searchParams?: { [
       <form className={style.page} action={createTransactionAction}>
 
         <section className={style.contentWrapperOne}>
-          <Input attributes={{name: "categoryName", type: "text", placeholder: "Name", className: style.name, required: true}} />
+          <Input attributes={{name: "categoryName", type: "text", placeholder: "Name", className: style.name, required: true, maxLength: 45}} />
 
           <DataTimePicker rawDate={rawDate} rawTime={rawTime} date={transactionDate} time={transactionTime}></DataTimePicker>
 
